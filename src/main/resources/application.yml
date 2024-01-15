@@ -1,0 +1,22 @@
+refreshproperties:
+
+  fileParseProperties:
+    -
+      path: src/main/resources/cities.json
+      className: com.example.food_basket_optimization.entity.City
+
+  jsonsParseProperties:
+    -
+      headers:
+      uri: https://sbermarket.ru/api/stores/1
+      body:
+      http-method: get
+      class-name: com.example.food_basket_optimization.pojo.ShopPOJO
+      deserialization-class-name: com.example.food_basket_optimization.deserializer.SperMarketShopDeserializer
+
+db:
+  url:
+  password:
+  username:
+
+
