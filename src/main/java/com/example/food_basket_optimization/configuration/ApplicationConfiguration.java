@@ -1,35 +1,21 @@
 package com.example.food_basket_optimization.configuration;
 
 
-import com.example.food_basket_optimization.refresh.Refresh;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.food_basket_optimization.importer.ImportContext;
+import org.hibernate.SessionFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.example.food_basket_optimization.refresh.properties.RefreshProperties;
 
 @Configuration
 public class ApplicationConfiguration {
 
 
+    @Bean
+    @ConfigurationProperties("import-context")
+    public ImportContext importContext() {
 
-   @Bean
-   @ConfigurationProperties("refreshproperties")
-   public RefreshProperties refreshProperties(){
-       return new RefreshProperties();
-   }
-
-   @Bean
-    public ObjectMapper om(){
-       return new ObjectMapper()
-               .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-               .configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-   }
-
-   @Bean
-    public Refresh refresh(){
-       return new Refresh();
+     return new ImportContext();
     }
 
 
@@ -37,7 +23,6 @@ public class ApplicationConfiguration {
 //    public String importantString(){
 //       return "shshhs";
 //   }
-
 
 
 }

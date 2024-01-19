@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.refresh.parser.properties.htpp;
+package com.example.food_basket_optimization.importer.parser.parsedobject.url;
 
 import lombok.Getter;
 

@@ -23,8 +23,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:6.3.0.Final'
     implementation 'org.postgresql:postgresql:42.7.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-
-
+    implementation 'org.jsoup:jsoup:1.17.2'
 
 }
 

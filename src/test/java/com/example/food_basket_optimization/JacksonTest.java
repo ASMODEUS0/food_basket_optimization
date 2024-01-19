@@ -17,16 +17,7 @@ public class JacksonTest {
     @Test
     public void test1() throws IOException {
 
-        ObjectMapper om = new ObjectMapper();
-
-        om.
-
-        File file = new File("/Users/nikitauporov/Desktop/Диплом/food_basket_optimization/src/main/resources/text.json");
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        ShopPOJO shop = om.readValue(file, ShopPOJO.class);
-        System.out.println(shop.getRetailerName());
-
+   
     }
     @Test
     public void test2() throws IOException {

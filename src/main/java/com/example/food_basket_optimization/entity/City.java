@@ -1,6 +1,5 @@
 package com.example.food_basket_optimization.entity;
 
-import com.example.food_basket_optimization.refresh.parser.model.Parsered;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.example.food_basket_optimization.refresh.parser.service;
+package com.example.food_basket_optimization.importer.parser.service;
 
-import com.example.food_basket_optimization.refresh.parser.properties.htpp.HTTPParseProperties;
+import com.example.food_basket_optimization.importer.parser.parsedobject.HttpObject;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -9,20 +9,19 @@ import java.net.http.HttpResponse;
 
 public class RequestService {
 
-   public static String doRequest(HTTPParseProperties parseProperties){
+   public static String doRequest(HttpObject httpObject){
 
        HttpClient httpClient =  HttpClient.newBuilder()
                .version(HttpClient.Version.HTTP_2)
                .build();
 
-       switch (parseProperties.getHttpMethod()){
+       switch (httpObject.getHttpMethod()){
            case GET -> {
-               String result = doGet(parseProperties, httpClient);
+               String result = doGet(httpObject, httpClient);
                return result;
-
            }
            case POST -> {
-               String result = doPost(parseProperties, httpClient);
+               String result = doPost(httpObject, httpClient);
                return result;
            }
            default -> {
@@ -33,7 +32,7 @@ public class RequestService {
     }
 
 
-    private static String doGet(HTTPParseProperties parseProperties, HttpClient client){
+    private static String doGet(HttpObject parseProperties, HttpClient client){
         HttpRequest request = HttpRequest.newBuilder(parseProperties.getUri())
                 .GET()
                 .build();
@@ -48,7 +47,7 @@ public class RequestService {
     }
 
 
-    private static String doPost(HTTPParseProperties parseProperties, HttpClient client){
+    private static String doPost(HttpObject parseProperties, HttpClient client){
         HttpRequest request = HttpRequest.newBuilder(parseProperties.getUri())
                 .POST(HttpRequest.BodyPublishers.ofString(parseProperties.getBody()))
                 .build();

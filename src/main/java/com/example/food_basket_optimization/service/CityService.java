@@ -15,7 +15,6 @@ public class CityService {
 
 
 
-
     public Optional<CityReadDto> findById(Long id){
         return cityRepository.findById(id)
                 .map(cityReadMapper::mapFrom);
