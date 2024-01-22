@@ -41,4 +41,8 @@ public class HTTPJsonParsedObject extends HttpObject implements JsonParsedObject
         return isList;
     }
 
+//    @Override
+//    public <T extends HttpObject> T getCopy(HttpObject object) {
+//        return null;
+//    }
 }

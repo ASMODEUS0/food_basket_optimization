@@ -2,7 +2,7 @@ import-context:
 
   diksiResource:
     name: name
-    htmlParsedObjects:
+    httpHtmlParsedObjects:
       -
         uri: https://dixy.ru/catalog/
         params:
@@ -11,6 +11,9 @@ import-context:
               value: 1:-:50
               paramType: ITERABLE
         httpMethod: GET
+
+
+
 
   name: str
   fileParseProperties:

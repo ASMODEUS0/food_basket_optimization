@@ -1,6 +1,7 @@
 package com.example.food_basket_optimization.importer.parser;
 
 import com.example.food_basket_optimization.importer.BaseResource;
+import com.example.food_basket_optimization.importer.parser.parsedobject.HTTPHtmlParsedObject;
 import com.example.food_basket_optimization.importer.parser.parsedobject.HtmlParsedObjectContract;
 import com.example.food_basket_optimization.importer.parser.parsedobject.JsonParsedObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,20 +25,28 @@ public class Parser {
 
 
     //Collect parsedObjects in one List
-    public List<Object> parseResource(BaseResource resource){
+//    public List<Object> parseResource(BaseResource resource){
+//
+//        ArrayList<Object> result = new ArrayList<>();
+//
+//        List<? extends HtmlParsedObjectContract> htmlParsedObjects = resource.getHtmlParsedObjects();
+//
+//        for(HtmlParsedObjectContract object: htmlParsedObjects){
+//            result.add(parseHtml(object));
+//        }
+//        return result;
+//    }
+//
 
-        ArrayList<Object> result = new ArrayList<>();
 
-        List<? extends HtmlParsedObjectContract> htmlParsedObjects = resource.getHtmlParsedObjects();
+    public List<Object> parseHtml(List<? extends HtmlParsedObjectContract> objects){
 
-        for(HtmlParsedObjectContract object: htmlParsedObjects){
-            result.add(parseHtml(object));
-        }
-        return result;
+        ArrayList<HtmlParsedObjectContract> htmlParsedObjectContracts = new ArrayList<>();
+        return objects.stream().map(this::parseHtml).toList();
     }
 
 
-    public List<Object> parseHtml(HtmlParsedObjectContract object){
+    public Object parseHtml(HtmlParsedObjectContract object){
         String htmlText = object.htmlText();
 
 
