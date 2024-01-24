@@ -8,6 +8,8 @@ class FoodBasketOptimizationApplicationTests {
 
     @Test
     void contextLoads() {
+
+        Thread thread = new Thread("");
     }
 
 }

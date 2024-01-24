@@ -5,11 +5,12 @@ import-context:
     httpHtmlParsedObjects:
       -
         uri: https://dixy.ru/catalog/
-        params:
+        headers:
             -
               key: PAGEN_1
-              value: 1:-:50
-              paramType: ITERABLE
+              value: 1-50
+              type: ITERABLE
+
         httpMethod: GET
 
 

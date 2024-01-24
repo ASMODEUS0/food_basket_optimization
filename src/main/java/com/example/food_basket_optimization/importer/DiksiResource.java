@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 @Setter
 @Getter
-public class DiksiResource implements BaseResource {
+public class DiksiResource{
 
 
     private List<Object> resourceParsedObjects;
@@ -23,9 +23,4 @@ public class DiksiResource implements BaseResource {
 
     private String name;
 
-
-    @Override
-    public List<? extends HtmlParsedObjectContract> getHtmlParsedObjects() {
-        return null;
-    }
 }

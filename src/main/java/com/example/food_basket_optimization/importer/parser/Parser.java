@@ -24,23 +24,12 @@ import java.util.List;
 public class Parser {
 
 
-    //Collect parsedObjects in one List
-//    public List<Object> parseResource(BaseResource resource){
-//
-//        ArrayList<Object> result = new ArrayList<>();
-//
-//        List<? extends HtmlParsedObjectContract> htmlParsedObjects = resource.getHtmlParsedObjects();
-//
-//        for(HtmlParsedObjectContract object: htmlParsedObjects){
-//            result.add(parseHtml(object));
-//        }
-//        return result;
-//    }
-//
 
 
     public List<Object> parseHtml(List<? extends HtmlParsedObjectContract> objects){
 
+        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.readValue();
         ArrayList<HtmlParsedObjectContract> htmlParsedObjectContracts = new ArrayList<>();
         return objects.stream().map(this::parseHtml).toList();
     }
@@ -48,8 +37,6 @@ public class Parser {
 
     public Object parseHtml(HtmlParsedObjectContract object){
         String htmlText = object.htmlText();
-
-
         Document doc = Jsoup.parse(htmlText);
         Elements select = doc.select("div.drop-list");
 
