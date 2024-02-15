@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Iterator;
 
 public class JacksonTest {
@@ -45,5 +49,24 @@ public class JacksonTest {
 //        annotation.
 
 
+    }
+
+
+    @Test
+    public void testRequest() throws IOException, InterruptedException {
+        HttpClient client  = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
+
+
+        HttpRequest request = HttpRequest.newBuilder(URI.create("https://sbermarket.ru/metro"))
+                .GET()
+                .build();
+
+
+        HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        String body = send.body();
+        System.out.println();
     }
 }

@@ -1,8 +1,9 @@
 package com.example.food_basket_optimization;
 
-import com.example.food_basket_optimization.importer.ImportContext;
-import com.example.food_basket_optimization.pojo.StoreFromMegaMarket;
-import org.hibernate.Session;
+import com.example.food_basket_optimization.importer.ImportConfiguration;
+import com.example.food_basket_optimization.importer.Importer;
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -17,11 +18,14 @@ public class FoodBasketOptimizationApplication {
 
 
 
-        ImportContext bean = context.getBean(ImportContext.class);
-        bean.importAllResources();
 
 
-        System.out.println(bean);
+        ImportConfiguration bean = context.getBean(ImportConfiguration.class);
+        Importer importer = context.getBean(Importer.class);
+
+        importer.initialImportResources();
+
+
 
 
 //        }

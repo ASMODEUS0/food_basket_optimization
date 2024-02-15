@@ -1,39 +1,77 @@
 package com.example.food_basket_optimization.importer.parser.service;
 
-import com.example.food_basket_optimization.importer.parser.parsedobject.HttpObject;
+import com.example.food_basket_optimization.importer.parser.parsedproperties.SourceHttp;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestService {
 
-   public static String doRequest(HttpObject httpObject){
+    static int count;
 
-       HttpClient httpClient =  HttpClient.newBuilder()
-               .version(HttpClient.Version.HTTP_2)
-               .build();
+    private static HttpClient client;
 
-       switch (httpObject.getHttpMethod()){
-           case GET -> {
-               String result = doGet(httpObject, httpClient);
-               return result;
-           }
-           case POST -> {
-               String result = doPost(httpObject, httpClient);
-               return result;
-           }
-           default -> {
-               return null;
-           }
-       }
+
+    static {
+        client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .build();
+    }
+
+
+    public static List<String> doRequests(List<HttpRequest> requests) {
+        return requests.stream().map(RequestService::doRequest).toList();
+    }
+
+
+
+    public static String doRequest(HttpRequest request) {
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static String doRequest1(SourceHttp source) {
+
+        HttpClient httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .build();
+
+
+        if (source.getParams() != null) {
+//            System.out.println("Request: " + source.getParams().get(0).value() + " count: " + count);
+
+            count += 1;
+        }
+
+        switch (source.getMethod()) {
+            case GET -> {
+                String result = doGet1(source, httpClient);
+                return result;
+            }
+            case POST -> {
+                String result = doPost1(source, httpClient);
+                return result;
+            }
+            default -> {
+                return null;
+            }
+        }
 
     }
 
 
-    private static String doGet(HttpObject parseProperties, HttpClient client){
-        HttpRequest request = HttpRequest.newBuilder(parseProperties.getUri())
+    private static String doGet1(SourceHttp source, HttpClient client) {
+        HttpRequest request = HttpRequest.newBuilder(source.getUri())
                 .GET()
                 .build();
 
@@ -47,9 +85,9 @@ public class RequestService {
     }
 
 
-    private static String doPost(HttpObject parseProperties, HttpClient client){
-        HttpRequest request = HttpRequest.newBuilder(parseProperties.getUri())
-                .POST(HttpRequest.BodyPublishers.ofString(parseProperties.getBody()))
+    private static String doPost1(SourceHttp source, HttpClient client) {
+        HttpRequest request = HttpRequest.newBuilder(source.getUri())
+                .POST(HttpRequest.BodyPublishers.ofString(source.getBody()))
                 .build();
 
         try {
@@ -60,7 +98,6 @@ public class RequestService {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }

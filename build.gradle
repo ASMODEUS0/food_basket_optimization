@@ -25,6 +25,9 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
     implementation 'org.jsoup:jsoup:1.17.2'
     implementation 'org.jspecify:jspecify:0.3.0'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    implementation 'commons-httpclient:commons-httpclient:3.1'
+
 
 
 }

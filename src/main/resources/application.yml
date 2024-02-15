@@ -1,36 +1,77 @@
-import-context:
+#import-context:
+#
+#  diksiResource:
+#    name: name
+#    httpHtmlParsedObjects:
+#      -
+#        uri: https://dixy.ru/catalog/
+#        headers:
+#            -
+#              key: PAGEN_1
+#              value: 1-50
+#              type: ITERABLE
+#
+#        httpMethod: GET
+#
+#
+#
+#
+#  name: str
+#  fileParseProperties:
+#    -
+#      path: src/main/resources/cities.json
+#      className: com.example.food_basket_optimization.pojo.CityFromFile
+#      isList: true
+#  httpJsonParseObjects:
+#    -
+#      className: com.example.food_basket_optimization.pojo.StoreFromMegaMarket
+#      uri: https://sbermarket.ru/api/stores/1
+#      httpMethod: GET
+#      body: null
+#      isList: false
+#
+#  htmlParsedObjects:
 
-  diksiResource:
-    name: name
-    httpHtmlParsedObjects:
-      -
-        uri: https://dixy.ru/catalog/
-        headers:
-            -
-              key: PAGEN_1
-              value: 1-50
-              type: ITERABLE
 
-        httpMethod: GET
+#
+#import-configuration:
+#  resources:
+#    -
+#      http-html-parsed-objects:
+#          -
+#            http-method: get
+#            params:
+#              -
+#                key: PAGEN_1
+#                value: 1-50
+#                type: ITERABLE
+#            headers:
+#                -
+#                  key: Cookie
+#                  value: BITRIX_SM_PROJECT_REGION_ID=REF|DiksiCity.id|
+#                  type: ITERABLEREF
+#            uri: https://dixy.ru/catalog/
+#            reference-classes:
+#              -
+#                com.example.food_basket_optimization.pojo.DiksiCity
+#            clazz: com.example.food_basket_optimization.pojo.DiksiProduct
+#
+#
+#
+#
+#          -
+#            http-method: get
+#            uri: https://dixy.ru/catalog/
+#            clazz: com.example.food_basket_optimization.pojo.DiksiCity
 
 
-
-
-  name: str
-  fileParseProperties:
-    -
-      path: src/main/resources/cities.json
-      className: com.example.food_basket_optimization.pojo.CityFromFile
-      isList: true
-  httpJsonParseObjects:
-    -
-      className: com.example.food_basket_optimization.pojo.StoreFromMegaMarket
-      uri: https://sbermarket.ru/api/stores/1
-      httpMethod: GET
-      body: null
-      isList: false
-
-  htmlParsedObjects:
+#diksi-city-properties:
+#  class-to-parse: com.example.food_basket_optimization.pojo.DiksiCity
+#  references-classes:
+#  source:
+#    params:
+#      -
+#
 
 
 

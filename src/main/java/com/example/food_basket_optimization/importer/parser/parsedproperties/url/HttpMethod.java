@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.importer.parser.parsedobject.url;
+package com.example.food_basket_optimization.importer.parser.parsedproperties.url;
 
 import lombok.Getter;
 
