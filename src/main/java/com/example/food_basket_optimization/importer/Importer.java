@@ -1,61 +1,66 @@
 package com.example.food_basket_optimization.importer;
 
-import com.example.food_basket_optimization.importer.parser.Parser;
-
-import com.example.food_basket_optimization.importer.parser.parsedobject.ParsedObject;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.HttpHtmlProperties;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.Hibernate;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
+import com.example.food_basket_optimization.extraction.Extractor;
+import com.example.food_basket_optimization.extraction.mapper.ExtractedMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.beans.PropertyChangeSupport;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.stream.Stream;
 
+
+/**
+ * service responsible for parsing a resource and adding data from this resource to the database
+ */
+@RequiredArgsConstructor
 @Component
-@Getter
-@Setter
-public class Importer  {
+public class Importer {
 
-    private PropertyChangeSupport support;
+    private final Extractor extractor;
+    private final ExtractedMapper extractedMapper;
 
-    @Autowired
-    private Parser parser;
 
-    @Autowired
-    private   Map<Class<?>, List<?>> importContext;
 
-    private final ExecutorService threadPool = Executors.newCachedThreadPool();
+    public void importAll(){
 
-    @Autowired
-    private  ImportConfiguration configuration;
+        List<Future<List<? extends ExtractedEntity>>> extractedFutures = extractor.extract();
+        while(true){
+            boolean extractionContinues = true;
+            for(Future<List<? extends ExtractedEntity>> extractFut: extractedFutures){
+                if (!extractFut.isDone()) {
+                    extractionContinues = false;
+                }
+            }
+            if(extractionContinues){
+                break;
+            }
+        }
 
-    public Importer() {
-        support = new PropertyChangeSupport(this);
+        List<? extends List<? extends ExtractedEntity>> extractedObjects = extractedFutures.stream().map(fut -> {
+            try {
+                return (List<? extends ExtractedEntity>) fut.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
+
+        List<Object> collect = extractedObjects.stream().flatMap(Collection::stream).flatMap(object -> {
+            if (object instanceof ExtractedEntityMappedObject<?>) {
+                return Stream.of(extractedMapper.map((ExtractedEntityMappedObject<?>) object));
+            }
+            return Stream.empty();
+        }).toList();
+
+        ExtractedEntity extracted = extractedObjects.get(0).get(0);
+
+//        Object map = extractedMapper.map(extracted);
+
 
     }
-
-    public void initialImportResources(){
-
-
-
-//        HttpHtmlProperties httpHtmlProperties = new HttpHtmlProperties();
-
-        configuration.getPropertiesHttp().forEach(propertyHtpp -> {
-            ParsedObject<?> parsedObject = new ParsedObject(this, propertyHtpp);
-            ImportRunnable importRunnable = new ImportRunnable(parsedObject);
-            support.addPropertyChangeListener(importRunnable);
-            threadPool.execute(importRunnable);
-        });
-
-
-
-    }
-
 
 
 }

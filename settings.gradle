@@ -1,1 +1,6 @@
 rootProject.name = 'food_basket_optimization'
+include 'integrationTest'
+include 'untitled'
+include 'untitled1'
+include 'untitled'
+

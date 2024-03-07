@@ -1,22 +1,19 @@
 package com.example.food_basket_optimization.configuration;
 
 
-import com.example.food_basket_optimization.importer.ImportConfiguration;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.*;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.url.HttpMethod;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.url.KeyValueUrlBasicContextual;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.url.KeyValueUrlContextual;
-import com.example.food_basket_optimization.importer.parser.parsedproperties.url.KeyValueUrlIterable;
-import com.example.food_basket_optimization.pojo.DiksiCity;
-import com.example.food_basket_optimization.pojo.DiksiProduct;
-import lombok.SneakyThrows;
+import com.example.food_basket_optimization.extractedentity.lenta.LentaCityExt;
+import com.example.food_basket_optimization.extractedentity.lenta.LentaStoreExt;
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.JsonMapper;
+import com.example.food_basket_optimization.extraction.properties.root.HttpJsonProperties;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.ResolvableSourceHttpProperties;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlContextualPathProperties;
+import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
+import com.example.food_basket_optimization.extraction.properties.util.RefValue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.ApplicationEventMulticaster;
-import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
-import java.net.URI;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -25,61 +22,36 @@ import java.util.concurrent.ConcurrentMap;
 public class ApplicationConfiguration {
 
 
-    @Bean(name = "applicationEventMulticaster")
-    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        SimpleApplicationEventMulticaster eventMulticaster =
-                new SimpleApplicationEventMulticaster();
-
-        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
-        return eventMulticaster;
-    }
-
-    @Bean(name = "config")
-    public ImportConfiguration configuration() {
-        return new ImportConfiguration(propertiesHttp());
-    }
-
-
-    @SneakyThrows
-    @Bean()
-    public List<ParsedProperties> propertiesHttp() {
-        ArrayList<ParsedProperties> result = new ArrayList<>();
-        SourceHttp citySource = new SourceHttp(URI.create("https://dixy.ru/catalog/"),
-                HttpMethod.GET, "",
-                new ArrayList<>(),
-                new ArrayList<>());
-
-        HttpHtmlProperties cityProperties = new HttpHtmlProperties(citySource, DiksiCity.class, importContext(), htmlMapper());
-
-
-
-        KeyValueUrlContextual header = new KeyValueUrlContextual("BITRIX_SM_PROJECT_REGION_IDREF(com.example.food_basket_optimization.pojo.DiksiCity|id)", "Cookie",importContext(), DiksiCity.class );
-        KeyValueUrlIterable param = new KeyValueUrlIterable("PAGEN_1=", "", 1, 3);
-        SourceHttp productSource = new SourceHttp(URI.create("https://dixy.ru/catalog/"), HttpMethod.GET, "", List.of(param), List.of(header));
-
-        HttpHtmlProperties productProperties = new HttpHtmlProperties(productSource, DiksiProduct.class, importContext(), htmlMapper());
-
-        result.add(cityProperties);
-        result.add(productProperties);
-        return result;
-    }
-
-
     @Bean
-    public HttpSourceResolver httpSourceResolver() {
-        return new HttpSourceResolver();
-    }
-
-
-
-    @Bean
-    public ConcurrentMap<Class<?>, List<?>> importContext() {
+    public ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext() {
         return new ConcurrentHashMap<>();
     }
 
+
     @Bean
-    public HtmlMapper htmlMapper() {
-        return new HtmlMapper();
+    public HttpJsonProperties lentaStoresParsedProperties(JsonMapper jsonMapper, SourceHttpResolver sourceHttpResolver) {
+       return  new HttpJsonProperties(lentaStoresSourceHttpResolvableProperties(),
+                LentaStoreExt.class,
+                jsonMapper,
+                sourceHttpResolver
+        );
+    }
+
+    @Bean
+    public ResolvableSourceHttpProperties lentaStoresSourceHttpResolvableProperties() {
+        return new ResolvableSourceHttpProperties(new ArrayList<>(),
+                new ArrayList<>(),
+                HttpMethod.GET,
+                lentaStoresUrlProperties(),
+                "");
+    }
+
+    @Bean
+    public UrlContextualPathProperties lentaStoresUrlProperties() {
+        return new UrlContextualPathProperties("https",
+                List.of("api", "v2", "cities", new RefValue(LentaCityExt.class, "id").toString(), "stores"),
+                "lenta.com",
+                extractContext());
     }
 
 
