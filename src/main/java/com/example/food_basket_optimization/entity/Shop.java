@@ -7,29 +7,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.jackson.JsonComponent;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@JsonRootName("store")
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
     private String name;
-    private String latitude;
-    private String longitude;
-    @OneToMany
-    private List<Product> products = new ArrayList<>();
-
-    @ManyToOne
-    private City city;
+    private Double latitude;
+    private Double longitude;
 
 }

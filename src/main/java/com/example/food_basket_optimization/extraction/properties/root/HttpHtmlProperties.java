@@ -2,8 +2,8 @@ package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttp;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttpContract;
 import com.example.food_basket_optimization.extraction.properties.mapping.htmlmap.HtmlMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
 
@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * Represent object to get controller parsing over HTTP, information will be received as Html
  */
-public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource<SourceHttpContract>> {
+public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource<SourceHttp>> {
     private final SourceHttpResolver sourceResolver;
     private final HtmlMapper mapper;
-    private final ResolvableSource<SourceHttpContract> resolvableSource;
+    private final ResolvableSource<SourceHttp> resolvableSource;
     private final Class<? extends ExtractedEntity> classToParse;
 
     public HttpHtmlProperties(SourceHttpResolver sourceResolver,
                               HtmlMapper mapper,
-                              ResolvableSource<SourceHttpContract> resolvableSource,
+                              ResolvableSource<SourceHttp> resolvableSource,
                               Class<? extends ExtractedEntity> classToParse) {
         this.sourceResolver = sourceResolver;
         this.mapper = mapper;
@@ -30,7 +30,7 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
 
 
     @Override
-    public ResolvableSource<SourceHttpContract> getParsedSource() {
+    public ResolvableSource<SourceHttp> getParsedSource() {
         return resolvableSource;
     }
 

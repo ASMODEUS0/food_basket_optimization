@@ -12,15 +12,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A property that is used to describe a url param or header with the ability to multiply based on context
+ * A property that is used to describe  url param or header with the ability to multiply based on context
  */
-public class KeyValueUrlContextual implements KeyValueUrlProperty, ReferencedExtraction {
+public class KeyValueUrlContextual implements KeyValueUrlMultiProperties, ReferencedExtraction {
 
 
     private final String value;
     private final String key;
     private final ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext;
-
     @Getter
     private final RefValue refValue;
 
@@ -36,31 +35,21 @@ public class KeyValueUrlContextual implements KeyValueUrlProperty, ReferencedExt
     }
 
 
-    @Override
-    public String key() {
-        return key;
-    }
 
     @Override
-    public String value() {
-        return value;
-    }
-
-
-    @Override
-    public List<KeyValueUrlBasicContextual> multiply() {
-        ArrayList<KeyValueUrlBasicContextual> result = new ArrayList<>();
+    public List<KeyValueUrlProperties> multiply() {
+        ArrayList<KeyValueUrlProperties> result = new ArrayList<>();
 
         Map<? extends ExtractedEntity, Object> objectFieldValueMap = ExtractUtil.getValueFromField(refValue.getRefClass(), refValue.getFieldName(), extractContext);
 
-        objectFieldValueMap.forEach((object, fieldValue) ->{
-          result.add(new KeyValueUrlBasicContextual(this.key, this.value + (String) fieldValue, object)) ;
-        });
+        objectFieldValueMap.forEach((object, fieldValue) -> result.add(new KeyValueUrlBasic(this.key, this.value +  fieldValue, List.of(object))));
+
         return result;
     }
 
+
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
-        return List.of(refValue.refClass);
+        return List.of(refValue.getRefClass());
     }
 }

@@ -1,7 +1,8 @@
 package com.example.food_basket_optimization.extraction.properties.source;
 
-import java.util.List;
+import com.example.food_basket_optimization.extraction.properties.Properties;
 
-public interface ParsedSourceContract {
+
+public interface ParsedSourceContract extends Properties {
 }
 

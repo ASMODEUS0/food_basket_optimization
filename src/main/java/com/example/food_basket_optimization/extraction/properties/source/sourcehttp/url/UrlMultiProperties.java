@@ -2,6 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.source.source
 
 import com.example.food_basket_optimization.extraction.properties.util.Multiplying;
 
-public interface UrlMultiProperties extends Multiplying<UrlProperties>, UrlProperties {
+
+public interface UrlMultiProperties extends Multiplying<UrlProperties> {
 
 }

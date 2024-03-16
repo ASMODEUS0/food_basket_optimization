@@ -4,7 +4,11 @@ import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
 import com.example.food_basket_optimization.extraction.Extractor;
 import com.example.food_basket_optimization.extraction.mapper.ExtractedMapper;
+import com.example.food_basket_optimization.util.HibernateUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -24,40 +28,57 @@ public class Importer {
     private final ExtractedMapper extractedMapper;
 
 
-
-    public void importAll(){
+    public void importAll() {
 
         List<Future<List<? extends ExtractedEntity>>> extractedFutures = extractor.extract();
-        while(true){
-            boolean extractionContinues = true;
-            for(Future<List<? extends ExtractedEntity>> extractFut: extractedFutures){
-                if (!extractFut.isDone()) {
-                    extractionContinues = false;
-                }
-            }
-            if(extractionContinues){
+
+        while (true) {
+            if (extractedFutures.stream().filter(Future::isDone).count() == extractedFutures.size()) {
                 break;
             }
         }
 
-        List<? extends List<? extends ExtractedEntity>> extractedObjects = extractedFutures.stream().map(fut -> {
+
+        List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = extractedFutures.stream().map(fut -> {
             try {
-                return (List<? extends ExtractedEntity>) fut.get();
+                return fut.get().stream()
+                        .flatMap(entity -> entity instanceof ExtractedEntityMappedObject<?> mappedEntity ? Stream.of(mappedEntity) : Stream.empty())
+                        .toList();
+
             } catch (InterruptedException | ExecutionException e) {
+
                 throw new RuntimeException(e);
             }
-        }).toList();
+        }).flatMap(Collection::stream).toList();
 
-        List<Object> collect = extractedObjects.stream().flatMap(Collection::stream).flatMap(object -> {
-            if (object instanceof ExtractedEntityMappedObject<?>) {
-                return Stream.of(extractedMapper.map((ExtractedEntityMappedObject<?>) object));
-            }
-            return Stream.empty();
-        }).toList();
 
-        ExtractedEntity extracted = extractedObjects.get(0).get(0);
+        save(extractedEntityMappedObjects);
+
+
+        System.out.println("");
+
+
+
+//        ExtractedEntity extracted = extractedObjects.get(0).get(0);
 
 //        Object map = extractedMapper.map(extracted);
+
+
+    }
+
+
+    private void save(List<? extends ExtractedEntityMappedObject<?>> objects){
+        try(SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+            Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+
+            objects.forEach(object ->{
+                Object mappedObject = object.map();
+                session.persist(mappedObject);
+            });
+
+            session.getTransaction().commit();
+        }
 
 
     }

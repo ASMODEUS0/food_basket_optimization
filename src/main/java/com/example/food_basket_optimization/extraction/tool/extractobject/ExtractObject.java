@@ -38,7 +38,9 @@ public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObje
 
     @Override
     public Boolean parseIsPossible() {
-        List<Class<? extends ExtractedEntity>> classesContainingInContext = properties.getRefClasses().stream().filter(aClass -> extractRuler.getExtractContext().containsKey(aClass)).toList();
+        List<Class<? extends ExtractedEntity>> classesContainingInContext = properties.getRefClasses().stream()
+                .filter(aClass -> extractRuler.getExtractContext().containsKey(aClass))
+                .toList();
         return classesContainingInContext.size() == properties.getRefClasses().size();
 
     }

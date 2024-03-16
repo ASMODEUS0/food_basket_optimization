@@ -13,5 +13,4 @@ public enum HttpMethod {
       this.methodName = methodName;
     }
 
-
 }

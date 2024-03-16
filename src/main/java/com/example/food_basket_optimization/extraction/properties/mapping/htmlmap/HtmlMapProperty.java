@@ -1,12 +1,10 @@
 package com.example.food_basket_optimization.extraction.properties.mapping.htmlmap;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;
 import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-import java.util.Map;
+
 @RequiredArgsConstructor
 public class HtmlMapProperty implements MapProperty {
 
@@ -28,4 +26,6 @@ public class HtmlMapProperty implements MapProperty {
     public List<? extends ExtractedEntity> getReferenceEntities() {
         return referenceEntities;
     }
+
+
 }

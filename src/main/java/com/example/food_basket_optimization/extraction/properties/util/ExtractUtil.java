@@ -2,6 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.util;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ReferencedExtraction;
+import com.example.food_basket_optimization.extractproperties.util.FailedMapping;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -10,7 +11,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *Util class to interact with context
@@ -48,7 +48,11 @@ public  class ExtractUtil {
             throw new IllegalStateException("The context does not match the specified properties, class with name: " + clazz.getName() + "missing in context");
         }
 
+        //todo: resolving failed mapping;
         return extractedObjects.stream().map(object -> {
+            if(object instanceof FailedMapping){
+                return new AbstractMap.SimpleEntry<>(object, "empty");
+            }
             try {
                 Field fieldWithValue = object.getClass().getDeclaredField(fieldName);
                 fieldWithValue.setAccessible(true);
@@ -67,9 +71,17 @@ public  class ExtractUtil {
         return mayBeReferenced instanceof ReferencedExtraction ? ((ReferencedExtraction) mayBeReferenced).getRefClasses() : new ArrayList<>();
     }
 
-    public static List<Class<? extends ExtractedEntity>> detectReferencesInListedObjects(List<?> mayHaveReferences) {
+    public static List<Class<? extends ExtractedEntity>> detectObjectReferences(Collection<?> mayHaveReferences) {
         return mayHaveReferences.stream().flatMap(object -> detectObjectReferences(object).stream()).toList();
     }
+
+
+    public static List<Class<? extends ExtractedEntity>> detectObjectReferences(Map<?, List<?>> mayHaveReferences) {
+        List<Class<? extends ExtractedEntity>> result = new ArrayList<>();
+        mayHaveReferences.forEach((key, value)-> result.addAll(detectObjectReferences(value)));
+        return result;
+    }
+
 
     /**
      * Сhecks whether the json string of the object is RefValue, if it is - returns the class to which the object refers

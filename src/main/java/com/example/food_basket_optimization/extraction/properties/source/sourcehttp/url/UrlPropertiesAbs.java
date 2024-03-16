@@ -24,9 +24,7 @@ public abstract class UrlPropertiesAbs {
 
     protected static String createPathFromPathElements(List<String> pathElements) {
         StringBuffer sbPath = new StringBuffer();
-        pathElements.forEach(element -> {
-            sbPath.append("/").append(element);
-        });
+        pathElements.forEach(element -> sbPath.append("/").append(element));
         return sbPath.toString();
     }
 

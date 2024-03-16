@@ -1,7 +1,7 @@
 package com.example.food_basket_optimization.castommapping;
 
-import com.example.food_basket_optimization.extractedentity.DiksiCityInfoExt;
-import com.example.food_basket_optimization.extractedentity.DiksiShopExt;
+import com.example.food_basket_optimization.extractproperties.extractedentity.diksi.DiksiCityInfoExt;
+import com.example.food_basket_optimization.extractproperties.extractedentity.diksi.DiksiShopExt;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.CustomJsonMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;
@@ -44,7 +44,6 @@ public class DikcyCityInfoJsonMapper implements CustomJsonMapper {
 
                     JsonElement shopsElements = object1.getAsJsonObject().get("shops");
                     JsonArray shopsArray = shopsElements.getAsJsonArray();
-                    System.out.println("");
                     shopsArray.forEach(shop -> {
                         Map<String, JsonElement> shopMap = shop.getAsJsonObject().asMap();
                         DiksiShopExt shopCur = DiksiShopExt.builder()

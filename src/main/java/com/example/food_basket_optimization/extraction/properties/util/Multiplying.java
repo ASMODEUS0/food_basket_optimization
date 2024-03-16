@@ -5,13 +5,12 @@ import java.util.List;
 /**
  * Notifies that the object that inherits this interface contains logic of its own reproduction.
  * The logic of reproduction depends on the object that inherits this interface.
- * The parameter T is the
- * @param <T>  The type of multiplied object
+ * @param <T>  This is the superclass of the type into which the inherited object is propagated
  */
 public interface Multiplying<T> {
     /**
      * Multiply property depending on subclass behavior
      * @return propagated properties witch will be cast to T
      */
-    List<? extends T> multiply();
+    List<T> multiply();
 }

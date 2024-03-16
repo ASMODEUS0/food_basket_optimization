@@ -6,14 +6,17 @@ import lombok.*;
 /**
  * Represent value witch can point on some contextual value;
  */
-@AllArgsConstructor
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode
 @Getter
 public class RefValue {
-    public Class<? extends ExtractedEntity> refClass;
-    public String fieldName;
+    private final Class<? extends ExtractedEntity> refClass ;
+    private final String fieldName;
+
+    public RefValue(Class<? extends ExtractedEntity> refClass, String fieldName) {
+        this.refClass = refClass;
+        this.fieldName = fieldName;
+    }
 
 
     @Override
@@ -21,4 +24,5 @@ public class RefValue {
         return "{\"refClass\":\" " + refClass.getName() + "\"," +
                " \"fieldName\":\"" + fieldName + "\"}";
     }
+
 }

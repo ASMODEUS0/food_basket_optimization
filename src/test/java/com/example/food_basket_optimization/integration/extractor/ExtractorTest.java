@@ -1,6 +1,6 @@
 package com.example.food_basket_optimization.integration.extractor;
 
-import com.example.food_basket_optimization.extractedentity.lenta.LentaCityExt;
+import com.example.food_basket_optimization.extractproperties.extractedentity.lenta.LentaCityExt;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.Extractor;
 import com.example.food_basket_optimization.extraction.properties.root.HttpJsonProperties;
@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @IT
 @RequiredArgsConstructor
