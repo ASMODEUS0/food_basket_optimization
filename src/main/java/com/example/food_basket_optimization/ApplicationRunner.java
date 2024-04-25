@@ -11,11 +11,8 @@ public class ApplicationRunner {
     public static void main(String[] args) throws InterruptedException {
         ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
 
-
         Importer importer = context.getBean(Importer.class);
-
         importer.importAll();
-
 
         System.out.println("");
     }

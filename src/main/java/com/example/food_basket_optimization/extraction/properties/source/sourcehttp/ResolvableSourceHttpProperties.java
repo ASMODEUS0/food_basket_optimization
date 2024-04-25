@@ -44,6 +44,8 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         refClasses.addAll(ExtractUtil.detectObjectReferences(urlProperty));
         refClasses.addAll(ExtractUtil.detectObjectReferences(body));
 
+        System.out.println("");
+
     }
 
 
@@ -56,6 +58,8 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         List<HttpMethod> listedMethod = List.of(method);
         List<UrlProperties> urlMultiplied = urlProperty.multiply();
         List<SimpleString> bodyMultiplied = body.multiply();
+
+
 
 
 
@@ -76,7 +80,8 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         }).toList();
 
 
-        return MultiplierUtil.createObjectsFromMultipliedParams(SourceHttp.class, mopWithRefValues);
+        List<SourceHttp> objectsFromMultipliedParams = MultiplierUtil.createObjectsFromMultipliedParams(SourceHttp.class, mopWithRefValues);
+        return objectsFromMultipliedParams;
 
     }
 

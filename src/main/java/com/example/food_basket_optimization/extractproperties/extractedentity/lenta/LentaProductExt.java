@@ -1,12 +1,8 @@
 package com.example.food_basket_optimization.extractproperties.extractedentity.lenta;
 
-import com.example.food_basket_optimization.deserializer.LentaProductDes;
 import com.example.food_basket_optimization.entity.Product;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.ArrayList;
 import java.util.Date;
 @JsonRootName(value = "skus")

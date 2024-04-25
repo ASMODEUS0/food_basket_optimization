@@ -15,7 +15,7 @@ public class KeyValueUrlBasic implements KeyValueUrlProperties {
 
     private final String key;
     private final String value;
-    private final List< ExtractedEntity> referenceEntities;
+    private final List<ExtractedEntity> referenceEntities;
 
     public KeyValueUrlBasic(String key, String value) {
         this.key = key;

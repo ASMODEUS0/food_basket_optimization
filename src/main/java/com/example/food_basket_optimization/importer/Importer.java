@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 
 /**
- * service responsible for parsing a resource and adding data from this resource to the database
+ * Service responsible for parsing a resource and adding data from this resource to the database
  */
 @RequiredArgsConstructor
 @Component

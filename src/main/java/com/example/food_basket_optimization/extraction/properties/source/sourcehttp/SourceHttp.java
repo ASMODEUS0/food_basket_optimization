@@ -2,6 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.source.source
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.request.RequestProperties;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValueUrlBasic;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlProperties;
@@ -17,7 +18,6 @@ public class SourceHttp implements SourceHttpContract {
     private final List<KeyValueUrlBasic> params;
     private final List<KeyValueUrlBasic> headers;
     private final List<ExtractedEntity> referenceEntities;
-
 
     public SourceHttp(UrlProperties url,
                       HttpMethod method,
@@ -59,6 +59,7 @@ public class SourceHttp implements SourceHttpContract {
     public SimpleString getBody() {
         return body;
     }
+
 
     @Override
     public List<ExtractedEntity> getReferenceEntities() {
