@@ -2,9 +2,11 @@ package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.Product;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
+import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.ArrayList;
 import java.util.Date;
+@JsonCollection
 @JsonRootName(value = "skus")
 public class LentaProductExt implements ExtractedEntityMappedObject<Product> {
 

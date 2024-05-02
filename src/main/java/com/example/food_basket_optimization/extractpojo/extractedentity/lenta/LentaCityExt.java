@@ -2,11 +2,12 @@ package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.City;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
+import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
 
-
+@JsonCollection
 @NoArgsConstructor
 @JsonIgnoreProperties(value = {""})
 public class LentaCityExt implements ExtractedEntityMappedObject<City> {

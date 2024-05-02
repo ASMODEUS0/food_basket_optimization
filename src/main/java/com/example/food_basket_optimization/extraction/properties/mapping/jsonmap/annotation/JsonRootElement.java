@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.extraction.properties.mapping.jsonmap;
+package com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

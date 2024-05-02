@@ -2,10 +2,12 @@ package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.Shop;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
+import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+@JsonCollection
 @Setter
 @Getter
 public class LentaStoreExt implements ExtractedEntityMappedObject<Shop> {
