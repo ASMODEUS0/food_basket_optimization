@@ -9,7 +9,6 @@ import com.example.food_basket_optimization.extraction.properties.source.sourceh
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlMultiProperties;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlProperties;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
-import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
 import com.example.food_basket_optimization.extraction.properties.util.MultiplierUtil;
 
 import java.util.ArrayList;
@@ -42,11 +41,15 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<HttpExtr
         this.headers = headers;
         this.params = params;
 
+
+
 //        detects ref values
-        refClasses.addAll(ExtractUtil.detectObjectReferences(params));
-        refClasses.addAll(ExtractUtil.detectObjectReferences(headers));
-        refClasses.addAll(ExtractUtil.detectObjectReferences(urlProperty));
-        refClasses.addAll(ExtractUtil.detectObjectReferences(body));
+
+        refClasses.addAll(params.getRefClasses());
+        refClasses.addAll(headers.getRefClasses());
+        refClasses.addAll(urlProperty.getRefClasses());
+        refClasses.addAll(body.getRefClasses());
+
 
     }
 

@@ -1,7 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.base.multi;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.ReferencedExtraction;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 @RequiredArgsConstructor
-public class ContextualStringProperty implements MultiString, ReferencedExtraction {
+public class ContextualStringProperty implements MultiString {
 
 
     private final String element;

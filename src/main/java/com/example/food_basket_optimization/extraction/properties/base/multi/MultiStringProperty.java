@@ -1,5 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.base.multi;
 
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,10 @@ public class MultiStringProperty implements MultiString {
     @Override
     public List<SimpleString> multiply() {
         return List.of(new StringProperty(property));
+    }
+
+    @Override
+    public List<Class<? extends ExtractedEntity>> getRefClasses() {
+        return List.of();
     }
 }

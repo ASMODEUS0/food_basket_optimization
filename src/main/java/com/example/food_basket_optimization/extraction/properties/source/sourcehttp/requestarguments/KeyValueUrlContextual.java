@@ -1,7 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.ReferencedExtraction;
 import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
 import com.example.food_basket_optimization.extraction.properties.util.RefValue;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * A property that is used to describe  url param or header with the ability to multiply based on context
  */
-public class KeyValueUrlContextual implements KeyValueUrlMultiProperties, ReferencedExtraction {
+public class KeyValueUrlContextual implements KeyValueUrlMultiProperties {
 
 
     private final String value;

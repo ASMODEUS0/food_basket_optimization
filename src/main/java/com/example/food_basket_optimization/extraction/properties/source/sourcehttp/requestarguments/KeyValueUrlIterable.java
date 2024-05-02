@@ -1,5 +1,7 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments;
 
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +33,8 @@ public class KeyValueUrlIterable implements KeyValueUrlMultiProperties {
         return result;
     }
 
+    @Override
+    public List<Class<? extends ExtractedEntity>> getRefClasses() {
+        return List.of();
+    }
 }

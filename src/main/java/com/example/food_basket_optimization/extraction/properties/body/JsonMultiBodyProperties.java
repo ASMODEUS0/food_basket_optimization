@@ -1,24 +1,20 @@
 package com.example.food_basket_optimization.extraction.properties.body;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.ReferencedExtraction;
 import com.example.food_basket_optimization.extraction.properties.base.multi.MultiString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
-import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
 
 
 import java.util.*;
 
-public class JsonMultiBodyProperties implements MultiString, ReferencedExtraction {
+public class JsonMultiBodyProperties implements MultiString {
 
 
     private final LinkedHashMap<String, MultiString> elements;
-    private final List<Class<? extends ExtractedEntity>> refClasses = new ArrayList<>();
 
     public JsonMultiBodyProperties(LinkedHashMap<String, MultiString> elements) {
         this.elements = elements;
-        refClasses.addAll(ExtractUtil.detectObjectReferences(elements));
     }
 
 
@@ -79,6 +75,10 @@ public class JsonMultiBodyProperties implements MultiString, ReferencedExtractio
 
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
-        return refClasses;
+        List<Class<? extends ExtractedEntity>> result = new ArrayList<>();
+        elements.forEach((key, refValue) -> {
+            result.addAll(refValue.getRefClasses());
+        });
+        return result;
     }
 }

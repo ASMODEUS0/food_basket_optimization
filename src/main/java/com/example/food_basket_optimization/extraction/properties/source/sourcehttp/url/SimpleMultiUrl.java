@@ -1,5 +1,7 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url;
 
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
+
 import java.util.List;
 
 public class SimpleMultiUrl implements UrlMultiProperties {
@@ -18,4 +20,8 @@ public class SimpleMultiUrl implements UrlMultiProperties {
        return List.of(new UrlBasicProperties(protocol, path, host));
     }
 
+    @Override
+    public List<Class<? extends ExtractedEntity>> getRefClasses() {
+        return List.of();
+    }
 }
