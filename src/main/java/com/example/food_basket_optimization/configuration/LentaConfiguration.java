@@ -2,7 +2,9 @@ package com.example.food_basket_optimization.configuration;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.base.multi.ContextualStringProperty;
+import com.example.food_basket_optimization.extraction.properties.base.multi.MultiString;
 import com.example.food_basket_optimization.extraction.properties.base.multi.MultiStringProperty;
+import com.example.food_basket_optimization.extraction.properties.body.JsonMultiBodyProperties;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.JsonMapper;
 import com.example.food_basket_optimization.extraction.properties.root.HttpJsonProperties;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.ResolvableSourceHttpProperties;
@@ -35,6 +37,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentMap;
@@ -101,16 +104,20 @@ public class LentaConfiguration {
                 new SimpleKeyValueUrlMulti("Content-Type", "application/json")));
 
 
-//        LinkedHashMap<String, MultiString> jsonElements = new LinkedHashMap<>();
-//        jsonElements.put("nodeCode", new MultiStringProperty("geee7643ec01603a5db2cf4819de1a033"));
-//        jsonElements.put("filters", new MultiStringProperty(""));
-//        jsonElements.put("typeSearch", new MultiStringProperty("1"));
-//        jsonElements.put("sortingType", new MultiStringProperty("ByPopularity"));
-//        jsonElements.put("offset", new MultiStringProperty("0"));
-//        jsonElements.put("limit", new MultiStringProperty("48"));
-//        jsonElements.put("updateFilters", new MultiStringProperty("true"));
+        LinkedHashMap<String, MultiString> jsonElements = new LinkedHashMap<>();
+        jsonElements.put("nodeCode", new MultiStringProperty("geee7643ec01603a5db2cf4819de1a033"));
+        jsonElements.put("filters", new MultiStringProperty("[]"));
+        jsonElements.put("tag", new MultiStringProperty(""));
+        jsonElements.put("pricesRange", new MultiStringProperty("null"));
+        jsonElements.put("typeSearch", new MultiStringProperty("1"));
+        jsonElements.put("limit", new MultiStringProperty("24"));
+        jsonElements.put("offset", new MultiStringProperty("96"));
+        jsonElements.put("updateFilters", new MultiStringProperty("true"));
+        jsonElements.put("sortingType", new MultiStringProperty("ByPopularity"));
 
-        MultiStringProperty body = new MultiStringProperty("{\"nodeCode\":\"g604e486481b04594c32002c67a2b459a\",\"filters\":[],\"tag\":\"\",\"pricesRange\":null,\"typeSearch\":1,\"limit\":24,\"updateFilters\":true,\"offset\":96,\"sortingType\":\"ByPopularity\"}");
+        JsonMultiBodyProperties body = new JsonMultiBodyProperties(jsonElements);
+
+//        MultiStringProperty body = new MultiStringProperty("{\"nodeCode\":\"g604e486481b04594c32002c67a2b459a\",\"filters\":[],\"tag\":\"\",\"pricesRange\":null,\"typeSearch\":1,\"limit\":24,\"updateFilters\":true,\"offset\":96,\"sortingType\":\"ByPopularity\"}");
 
 
         ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(emptyProperties,

@@ -46,6 +46,7 @@ public class JsonMultiBodyProperties implements MultiString {
             referencesEntity.addAll(object.getReferenceEntities());
             resultBodyBuilder.append('"').append(key).append("\" ").append(':').append('"').append(object.getProperty()).append('"').append(',');
         });
+        resultBodyBuilder.deleteCharAt(resultBodyBuilder.lastIndexOf(","));
         resultBodyBuilder.append('}');
 
         return new StringProperty(resultBodyBuilder.toString(), referencesEntity);
