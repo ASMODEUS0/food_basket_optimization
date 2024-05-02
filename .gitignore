@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+background.js
+manifest.json
+proxy_auth_plugin.zip

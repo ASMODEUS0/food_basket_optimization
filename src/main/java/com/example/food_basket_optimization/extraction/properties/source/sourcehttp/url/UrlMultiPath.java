@@ -41,7 +41,6 @@ public class UrlMultiPath implements UrlMultiProperties {
        return pathsElements.stream().map(pathElements -> convertToUrlProperties(pathElements, protocol, host)).toList();
     }
 
-    //todo: Add generic param to property
     private UrlProperties convertToUrlProperties(List<SimpleString> pathElements, String protocol, String host){
         SimpleString pathProperty = createPathFromPathElements(pathElements);
         return new UrlBasicProperties(protocol,

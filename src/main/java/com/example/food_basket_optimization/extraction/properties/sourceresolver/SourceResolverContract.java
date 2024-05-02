@@ -2,7 +2,6 @@ package com.example.food_basket_optimization.extraction.properties.sourceresolve
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;
-import com.example.food_basket_optimization.extraction.properties.source.ParsedSourceContract;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
 
 import java.util.List;

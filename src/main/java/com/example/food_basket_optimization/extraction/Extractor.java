@@ -3,7 +3,6 @@ package com.example.food_basket_optimization.extraction;
 import com.example.food_basket_optimization.extraction.tool.ExtractCallable;
 import com.example.food_basket_optimization.extraction.tool.extractobject.ExtractObject;
 import com.example.food_basket_optimization.extraction.properties.root.ExtractionProperties;
-import com.example.food_basket_optimization.extraction.properties.source.ParsedSourceContract;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,7 +49,7 @@ public class Extractor implements ExtractRuler {
 
 
 
-    public <T extends ParsedSourceContract> List<Future<List<? extends ExtractedEntity>>> extract() {
+    public  List<Future<List<? extends ExtractedEntity>>> extract() {
         if (extractConfiguration == null) {
             throw new IllegalStateException("Properties configuration is null");
         }

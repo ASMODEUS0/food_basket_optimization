@@ -2,7 +2,6 @@ package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ReferencedExtraction;
-import com.example.food_basket_optimization.extraction.properties.source.ParsedSourceContract;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceResolverContract;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
