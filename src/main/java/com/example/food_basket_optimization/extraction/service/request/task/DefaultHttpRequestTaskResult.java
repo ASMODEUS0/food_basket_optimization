@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 
-@Getter
 public record DefaultHttpRequestTaskResult(HttpClient client,
                                            HttpUriRequestBase request,
                                            HttpResponse response) {

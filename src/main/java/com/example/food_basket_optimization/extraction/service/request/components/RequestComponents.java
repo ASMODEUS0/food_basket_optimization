@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.List;
 
 public interface RequestComponents {
-   URL getUrl();
-   List<String> getParams();
+   URI getUri();
    List<String> getHeaders();
-   URI getURI();
 }

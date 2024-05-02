@@ -17,9 +17,9 @@ import com.example.food_basket_optimization.extraction.service.request.processin
 import com.example.food_basket_optimization.extraction.service.request.processing.ProcessingRequest;
 import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;
 import com.example.food_basket_optimization.extraction.service.request.util.RequestUtil;
-import com.example.food_basket_optimization.extractproperties.extractedentity.lenta.LentaCityExt;
-import com.example.food_basket_optimization.extractproperties.extractedentity.lenta.LentaProductExt;
-import com.example.food_basket_optimization.extractproperties.extractedentity.lenta.LentaStoreExt;
+import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.LentaCityExt;
+import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.LentaProductExt;
+import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.LentaStoreExt;
 import com.example.food_basket_optimization.selenium.page.UnknownPage;
 import com.example.food_basket_optimization.selenium.util.DriverOptions;
 import com.example.food_basket_optimization.selenium.util.Util;

@@ -4,6 +4,7 @@ import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.Properties;
 import com.example.food_basket_optimization.extraction.properties.base.multi.MultiString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
+import com.example.food_basket_optimization.extraction.properties.source.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.*;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlMultiProperties;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlProperties;
@@ -15,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHttp> {
-
-
+/**
+ * The object is responsible for propagating the properties of the http request,
+ * based on the specified parameters. These can be contextual matches or parameters
+ * based on numerical patterns.
+ */
+public class ResolvableSourceHttpProperties implements ResolvableSource<HttpExtractionSource> {
 
     private final List<Class<? extends ExtractedEntity>> refClasses = new ArrayList<>();
     private final KeyValueUrlMultiUnionProperties params;
@@ -44,14 +48,11 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         refClasses.addAll(ExtractUtil.detectObjectReferences(urlProperty));
         refClasses.addAll(ExtractUtil.detectObjectReferences(body));
 
-        System.out.println("");
-
     }
 
 
     @Override
-    public List<SourceHttp> resolve() {
-
+    public List<HttpExtractionSource> resolve() {
 
         List<List<KeyValueUrlProperties>> paramsMultiplied = params.multiply();
         List<List<KeyValueUrlProperties>> headersMultiplied = headers.multiply();
@@ -59,17 +60,13 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         List<UrlProperties> urlMultiplied = urlProperty.multiply();
         List<SimpleString> bodyMultiplied = body.multiply();
 
-
-
-
-
         List<List<Object>> multipliedObjectsParams = MultiplierUtil.directProduct(List.of(urlMultiplied, listedMethod, bodyMultiplied, paramsMultiplied, headersMultiplied));
 
 
+        //todo: REMAKE.
         List<List<Object>> mopWithRefValues = multipliedObjectsParams.stream().map(objectParams -> {
-
             List<Object> result = new ArrayList<>(objectParams);
-            List<ExtractedEntity> refValues = objectParams.stream().flatMap(objectParam -> {
+            List refValues = objectParams.stream().flatMap(objectParam -> {
                 if (objectParam instanceof Properties paramProperties) {
                     return paramProperties.getReferenceEntities().stream();
                 }
@@ -80,8 +77,10 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<SourceHt
         }).toList();
 
 
-        List<SourceHttp> objectsFromMultipliedParams = MultiplierUtil.createObjectsFromMultipliedParams(SourceHttp.class, mopWithRefValues);
-        return objectsFromMultipliedParams;
+        List<SourceHttpProperty> objectsFromMultipliedParams = MultiplierUtil.createObjectsFromMultipliedParams(SourceHttpProperty.class, mopWithRefValues);
+
+        return objectsFromMultipliedParams.stream().map(sourceProperty -> new HttpExtractionSource(sourceProperty.getProperty(),
+                sourceProperty.getReferenceEntities())).toList();
 
     }
 

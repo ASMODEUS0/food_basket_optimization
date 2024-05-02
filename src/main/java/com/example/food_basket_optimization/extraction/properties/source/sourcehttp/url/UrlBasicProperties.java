@@ -9,6 +9,7 @@ import java.util.List;
 public class UrlBasicProperties extends UrlPropertiesAbs implements UrlProperties{
 
     private final List<ExtractedEntity> referenceEntities;
+
     public UrlBasicProperties(String protocol, String path, String host) {
         super(protocol, path, host);
         this.referenceEntities = new ArrayList<>();
@@ -33,5 +34,10 @@ public class UrlBasicProperties extends UrlPropertiesAbs implements UrlPropertie
     @Override
     public List<ExtractedEntity> getReferenceEntities() {
         return referenceEntities;
+    }
+
+    @Override
+    public URL getProperty() {
+        return this.getUrl();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.extractproperties.extractedentity.lenta;
+package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.City;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;

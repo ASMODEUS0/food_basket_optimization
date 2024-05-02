@@ -12,29 +12,23 @@ import java.util.List;
 
 @Getter
 public class DefaultRequestComponents implements PostRequestComponents, GetRequestComponents {
-    private final URL url;
-    private final List<String> params;
+    @Getter()
+    private final URI uri;
     private final List<String> headers;
     private final HttpMethod method;
     private final InputStream bodyStream;
     private final ContentType contentType;
 
-    public DefaultRequestComponents(URL url,
-                                    List<String> params,
+    public DefaultRequestComponents(URI uri,
                                     List<String> headers,
                                     HttpMethod method,
                                     InputStream bodyStream,
                                     ContentType contentType) {
-        this.url = url;
-        this.params = params;
+        this.uri = uri;
         this.headers = headers;
         this.method = method;
         this.bodyStream = bodyStream;
         this.contentType = contentType;
     }
 
-    @Override
-    public URI getURI() {
-       return URIConstructor.convert(url, params);
-    }
 }

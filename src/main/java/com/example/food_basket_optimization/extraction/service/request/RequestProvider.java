@@ -31,7 +31,7 @@ public class RequestProvider {
     }
 
     private static HttpUriRequestBase providePOSTRequest(PostRequestComponents components) {
-        HttpUriRequestBase request = new HttpUriRequestBase(HttpMethod.POST.getMethodName(), components.getURI());
+        HttpUriRequestBase request = new HttpUriRequestBase(HttpMethod.POST.getMethodName(), components.getUri());
         request.setEntity(new BasicHttpEntity(components.getBodyStream(), components.getContentType()));
         request.setHeaders(RequestUtil.headers(components.getHeaders()).toArray(new BasicHeader[]{}));
         return request;
@@ -39,7 +39,7 @@ public class RequestProvider {
 
 
     private static HttpUriRequestBase provideGETRequest(GetRequestComponents components) {
-        HttpUriRequestBase request = new HttpUriRequestBase(HttpMethod.GET.getMethodName(), components.getURI());
+        HttpUriRequestBase request = new HttpUriRequestBase(HttpMethod.GET.getMethodName(), components.getUri());
         request.setHeaders(RequestUtil.headers(components.getHeaders()).toArray(new BasicHeader[]{}));
         return request;
     }

@@ -11,7 +11,7 @@ import com.example.food_basket_optimization.extraction.properties.mapping.Mapper
  * Describes an object that displays properties that can be used to take control
  * over the parsing of an entity. Parsing occurs entities of the same type
  */
-public interface ExtractionProperties<T extends ResolvableSource<? extends ParsedSourceContract>> extends ReferencedExtraction {
+public interface ExtractionProperties<T extends ResolvableSource<?>> extends ReferencedExtraction {
     Class<? extends ExtractedEntity> getClassToExtract();
     Mapper getMapper();
     T getParsedSource();

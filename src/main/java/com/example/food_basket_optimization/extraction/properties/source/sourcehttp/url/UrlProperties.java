@@ -7,9 +7,6 @@ import java.net.URL;
 /**
  * Represents properties for getting a java.net.URL object
  */
-public interface UrlProperties extends Properties {
-    String getProtocol();
-    String getHost();
-    String getPath();
-    URL getUrl();
+public interface UrlProperties extends Properties<URL> {
+
 }

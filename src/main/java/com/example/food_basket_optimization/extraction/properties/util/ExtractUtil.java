@@ -2,7 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.util;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ReferencedExtraction;
-import com.example.food_basket_optimization.extractproperties.util.FailedMapping;
+import com.example.food_basket_optimization.extractpojo.util.FailedMapping;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;

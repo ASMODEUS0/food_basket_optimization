@@ -46,4 +46,9 @@ public class KeyValueUrlBasic implements KeyValueUrlProperties {
     public List< ExtractedEntity> getReferenceEntities() {
         return referenceEntities;
     }
+
+    @Override
+    public KeyValue getProperty() {
+        return new KeyValue(key, value);
+    }
 }

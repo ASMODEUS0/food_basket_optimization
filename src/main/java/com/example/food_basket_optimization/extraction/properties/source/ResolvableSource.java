@@ -4,6 +4,6 @@ import com.example.food_basket_optimization.extraction.ReferencedExtraction;
 
 import java.util.List;
 
-public interface ResolvableSource<S extends ParsedSourceContract> extends ReferencedExtraction {
+public interface ResolvableSource<S> extends ReferencedExtraction {
     List<S> resolve();
 }

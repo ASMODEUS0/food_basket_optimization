@@ -7,6 +7,6 @@ import com.example.food_basket_optimization.extraction.properties.source.Resolva
 
 import java.util.List;
 
-public interface SourceResolverContract<T extends ResolvableSource<? extends ParsedSourceContract>> {
+public interface SourceResolverContract<T extends ResolvableSource<?>> {
     List<MapProperty> getData(T resolvableSource, Class<? extends ExtractedEntity> classToParse);
 }

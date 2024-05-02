@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 public class ContextualStringProperty implements MultiString, ReferencedExtraction {
 
 
-    private final java.lang.String element;
+    private final String element;
     private final ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext;
     private final RefValue refValue;
 

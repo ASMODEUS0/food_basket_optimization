@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.extractproperties.extractedentity.diksi;
+package com.example.food_basket_optimization.extractpojo.extractedentity.diksi;
 
 
 import com.example.food_basket_optimization.extraction.properties.mapping.htmlmap.annotation.Contextual;

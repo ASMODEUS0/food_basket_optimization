@@ -2,25 +2,26 @@ package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttp;
+import com.example.food_basket_optimization.extraction.properties.source.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
 import com.example.food_basket_optimization.extraction.properties.mapping.htmlmap.HtmlMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
+import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceResolverContract;
 
 import java.util.List;
 
 /**
  * Represent object to get controller parsing over HTTP, information will be received as Html
  */
-public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource<SourceHttp>> {
-    private final SourceHttpResolver sourceResolver;
+public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource<HttpExtractionSource> > {
+    private final SourceResolverContract<ResolvableSource<HttpExtractionSource> > sourceResolver;
     private final HtmlMapper mapper;
-    private final ResolvableSource<SourceHttp> resolvableSource;
+    private final ResolvableSource<HttpExtractionSource>  resolvableSource;
     private final Class<? extends ExtractedEntity> classToParse;
 
     public HttpHtmlProperties(SourceHttpResolver sourceResolver,
                               HtmlMapper mapper,
-                              ResolvableSource<SourceHttp> resolvableSource,
+                              ResolvableSource<HttpExtractionSource>  resolvableSource,
                               Class<? extends ExtractedEntity> classToParse) {
         this.sourceResolver = sourceResolver;
         this.mapper = mapper;
@@ -30,7 +31,7 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
 
 
     @Override
-    public ResolvableSource<SourceHttp> getParsedSource() {
+    public ResolvableSource<HttpExtractionSource>  getParsedSource() {
         return resolvableSource;
     }
 
@@ -45,7 +46,7 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
     }
 
     @Override
-    public SourceHttpResolver getSourceResolver() {
+    public SourceResolverContract<ResolvableSource<HttpExtractionSource> > getSourceResolver() {
         return sourceResolver;
     }
 

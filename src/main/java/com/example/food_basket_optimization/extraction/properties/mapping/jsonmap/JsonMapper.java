@@ -1,6 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.mapping.jsonmap;
 
-import com.example.food_basket_optimization.extractproperties.util.FailedMapping;
+import com.example.food_basket_optimization.extractpojo.util.FailedMapping;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;

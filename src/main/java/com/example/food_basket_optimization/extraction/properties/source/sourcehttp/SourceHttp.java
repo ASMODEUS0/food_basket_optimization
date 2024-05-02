@@ -1,68 +1,25 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp;
 
-import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.request.RequestProperties;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValueUrlBasic;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlProperties;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValue;
+import lombok.Getter;
 
+import java.net.URI;
 import java.util.List;
 
-
-public class SourceHttp implements SourceHttpContract {
-
-    private final UrlProperties url;
+@Getter
+public class SourceHttp {
+    private final URI uri;
+    private final List<KeyValue> headers;
     private final HttpMethod method;
-    private final SimpleString body;
-    private final List<KeyValueUrlBasic> params;
-    private final List<KeyValueUrlBasic> headers;
-    private final List<ExtractedEntity> referenceEntities;
+    private final String body;
 
-    public SourceHttp(UrlProperties url,
-                      HttpMethod method,
-                      SimpleString body,
-                      List<KeyValueUrlBasic> params,
-                      List<KeyValueUrlBasic> headers,
-                      List<ExtractedEntity> referenceEntities) {
 
-        this.url = url;
+    public SourceHttp(URI uri, List<KeyValue> headers, HttpMethod method, String body) {
+        this.uri = uri;
+        this.headers = headers;
         this.method = method;
         this.body = body;
-        this.params = params;
-        this.headers = headers;
-        this.referenceEntities = referenceEntities;
     }
 
-
-    @Override
-    public List<KeyValueUrlBasic> getParams() {
-        return params;
-    }
-
-    @Override
-    public List<KeyValueUrlBasic> getHeaders() {
-        return headers;
-    }
-
-    @Override
-    public UrlProperties getUrl() {
-        return this.url;
-    }
-
-    @Override
-    public HttpMethod getMethod() {
-        return method;
-    }
-
-    @Override
-    public SimpleString getBody() {
-        return body;
-    }
-
-
-    @Override
-    public List<ExtractedEntity> getReferenceEntities() {
-        return referenceEntities;
-    }
 }

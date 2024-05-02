@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.extractproperties;
+package com.example.food_basket_optimization.extractpojo;
 
 
 import lombok.Builder;

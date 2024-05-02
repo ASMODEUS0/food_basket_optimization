@@ -43,14 +43,14 @@ public class ApplicationConfiguration {
         ArrayList<HttpProxyClient> clients = new ArrayList<>();
         clients.add(pc1);
         clients.add(pc2);
-        clients.add(pc3);
-        clients.add(pc4);
-        clients.add(pc5);
-        clients.add(pc6);
-        clients.add(pc7);
-        clients.add(pc8);
-        clients.add(pc9);
-        clients.add(pc10);
+//        clients.add(pc3);
+//        clients.add(pc4);
+//        clients.add(pc5);
+//        clients.add(pc6);
+//        clients.add(pc7);
+//        clients.add(pc8);
+//        clients.add(pc9);
+//        clients.add(pc10);
         return clients;
     }
 

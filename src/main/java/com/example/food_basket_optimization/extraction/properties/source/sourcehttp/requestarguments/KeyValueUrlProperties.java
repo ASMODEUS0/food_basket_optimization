@@ -2,5 +2,5 @@ package com.example.food_basket_optimization.extraction.properties.source.source
 
 import com.example.food_basket_optimization.extraction.properties.Properties;
 
-public interface KeyValueUrlProperties extends KeyValueContract<String, String>, Properties {
+public interface KeyValueUrlProperties extends KeyValueContract<String, String>, Properties<KeyValue> {
 }

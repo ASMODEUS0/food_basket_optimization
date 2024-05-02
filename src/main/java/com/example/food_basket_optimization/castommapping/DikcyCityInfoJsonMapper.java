@@ -1,7 +1,7 @@
 package com.example.food_basket_optimization.castommapping;
 
-import com.example.food_basket_optimization.extractproperties.extractedentity.diksi.DiksiCityInfoExt;
-import com.example.food_basket_optimization.extractproperties.extractedentity.diksi.DiksiShopExt;
+import com.example.food_basket_optimization.extractpojo.extractedentity.diksi.DiksiCityInfoExt;
+import com.example.food_basket_optimization.extractpojo.extractedentity.diksi.DiksiShopExt;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.CustomJsonMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;

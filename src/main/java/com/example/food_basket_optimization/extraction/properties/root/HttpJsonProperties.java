@@ -3,25 +3,24 @@ package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttp;
+import com.example.food_basket_optimization.extraction.properties.source.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceResolverContract;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.JsonMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
 
 import java.util.List;
 
-public class HttpJsonProperties implements ExtractionProperties<ResolvableSource<SourceHttp>> {
+public class HttpJsonProperties implements ExtractionProperties<ResolvableSource<HttpExtractionSource>> {
 
-    private final ResolvableSource<SourceHttp> resolvableSource;
-    private final Class<? extends ExtractedEntity> classToParse;
+    private final ResolvableSource<HttpExtractionSource> resolvableSource;
+    private final SourceResolverContract<ResolvableSource<HttpExtractionSource>> sourceResolver;
     private final JsonMapper mapper;
-    private final SourceResolverContract<ResolvableSource<SourceHttp>> sourceResolver;
+    private final Class<? extends ExtractedEntity> classToParse;
 
-
-    public HttpJsonProperties(ResolvableSource<SourceHttp> resolvableSource,
+    public HttpJsonProperties(ResolvableSource<HttpExtractionSource> resolvableSource,
                               Class<? extends ExtractedEntity> classToParse,
                               JsonMapper mapper,
-                              SourceResolverContract<ResolvableSource<SourceHttp>> sourceResolver) {
+                              SourceResolverContract<ResolvableSource<HttpExtractionSource>> sourceResolver) {
         this.resolvableSource = resolvableSource;
         this.classToParse = classToParse;
         this.mapper = mapper;
@@ -40,12 +39,12 @@ public class HttpJsonProperties implements ExtractionProperties<ResolvableSource
     }
 
     @Override
-    public ResolvableSource<SourceHttp> getParsedSource() {
+    public ResolvableSource<HttpExtractionSource> getParsedSource() {
         return resolvableSource;
     }
 
     @Override
-    public SourceResolverContract<ResolvableSource<SourceHttp>> getSourceResolver() {
+    public SourceResolverContract<ResolvableSource<HttpExtractionSource>> getSourceResolver() {
         return sourceResolver;
     }
 
