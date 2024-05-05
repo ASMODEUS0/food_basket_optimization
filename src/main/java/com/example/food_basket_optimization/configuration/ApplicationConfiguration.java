@@ -6,6 +6,7 @@ import com.example.food_basket_optimization.extraction.service.request.*;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.service.request.executor.DefaultRequestExecutor;
 import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;
+import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.LentaNodeCodeExtr;
 import org.apache.hc.core5.http.HttpHost;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,10 @@ public class ApplicationConfiguration {
 
 
     @Bean
-    public ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext() {
-        return new ConcurrentHashMap<>();
+    public ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext(List<LentaNodeCodeExtr> lentaNodeCodes) {
+        ConcurrentHashMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractedContext = new ConcurrentHashMap<>();
+        extractedContext.put(LentaNodeCodeExtr.class, lentaNodeCodes);
+        return extractedContext;
     }
 
     @Bean

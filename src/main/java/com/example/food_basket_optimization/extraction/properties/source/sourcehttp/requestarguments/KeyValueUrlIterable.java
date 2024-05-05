@@ -25,8 +25,8 @@ public class KeyValueUrlIterable implements KeyValueUrlMultiProperties {
      * Multiply property by iterating it from startValue to endValue
      */
     @Override
-    public List<KeyValueUrlProperties> multiply() {
-        List<KeyValueUrlProperties> result = new ArrayList<>();
+    public List<KeyValueUrlProperty> multiply() {
+        List<KeyValueUrlProperty> result = new ArrayList<>();
         for (int i = startValue; i <= endValue; i++) {
             result.add(new KeyValueUrlBasic(key, value + i));
         }

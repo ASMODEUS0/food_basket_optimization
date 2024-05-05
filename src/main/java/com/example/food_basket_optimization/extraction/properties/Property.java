@@ -4,7 +4,7 @@ import com.example.food_basket_optimization.extraction.ExtractedEntity;
 
 import java.util.List;
 
-public interface Properties<T> {
+public interface Property<T> {
     List<ExtractedEntity> getReferenceEntities();
-    T getProperty();
+    T property();
 }

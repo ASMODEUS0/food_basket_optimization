@@ -1,6 +1,5 @@
 package com.example.food_basket_optimization.extraction.mapper;
 
-import com.example.food_basket_optimization.entity.BaseEntity;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
 import lombok.RequiredArgsConstructor;

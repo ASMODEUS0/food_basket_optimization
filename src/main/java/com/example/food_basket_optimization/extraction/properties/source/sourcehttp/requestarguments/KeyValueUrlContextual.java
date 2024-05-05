@@ -36,8 +36,8 @@ public class KeyValueUrlContextual implements KeyValueUrlMultiProperties {
 
 
     @Override
-    public List<KeyValueUrlProperties> multiply() {
-        ArrayList<KeyValueUrlProperties> result = new ArrayList<>();
+    public List<KeyValueUrlProperty> multiply() {
+        ArrayList<KeyValueUrlProperty> result = new ArrayList<>();
 
         Map<? extends ExtractedEntity, Object> objectFieldValueMap = ExtractUtil.getValueFromField(refValue.getRefClass(), refValue.getFieldName(), extractContext);
 

@@ -10,7 +10,7 @@ public class SimpleKeyValueUrlMulti implements KeyValueUrlMultiProperties {
     private final String key;
     private final String value;
     @Override
-    public List<KeyValueUrlProperties> multiply() {
+    public List<KeyValueUrlProperty> multiply() {
         return List.of(new KeyValueUrlBasic(key, value));
     }
 

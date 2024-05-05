@@ -11,7 +11,7 @@ import java.util.List;
  * class
  */
 @EqualsAndHashCode
-public class KeyValueUrlBasic implements KeyValueUrlProperties {
+public class KeyValueUrlBasic implements KeyValueUrlProperty {
 
     private final String key;
     private final String value;
@@ -48,7 +48,7 @@ public class KeyValueUrlBasic implements KeyValueUrlProperties {
     }
 
     @Override
-    public KeyValue getProperty() {
+    public KeyValue property() {
         return new KeyValue(key, value);
     }
 }

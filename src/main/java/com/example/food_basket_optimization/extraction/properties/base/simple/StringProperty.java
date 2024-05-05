@@ -27,7 +27,7 @@ public class StringProperty implements SimpleString {
     }
 
     @Override
-    public String getProperty() {
+    public String property() {
         return property;
     }
 }

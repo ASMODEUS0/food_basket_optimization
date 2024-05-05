@@ -9,16 +9,11 @@ import org.openqa.selenium.WebElement;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.Duration;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Log4j2
 public class Util {
-
-
 
     public static WebElement waitUntilDoNotFindElement(By element, int timeout, WebDriver browser) {
 
@@ -65,53 +60,55 @@ public class Util {
                                            String login,
                                            String password) {
 
-        String manifest_json = "{\n" +
-                               "  \"version\": \"1.0.0\",\n" +
-                               "  \"manifest_version\": 2,\n" +
-                               "  \"name\": \"Chrome Proxy\",\n" +
-                               "  \"permissions\": [\n" +
-                               "    \"proxy\",\n" +
-                               "    \"tabs\",\n" +
-                               "    \"unlimitedStorage\",\n" +
-                               "    \"storage\",\n" +
-                               "    \"<all_urls>\",\n" +
-                               "    \"webRequest\",\n" +
-                               "    \"webRequestBlocking\"\n" +
-                               "  ],\n" +
-                               "  \"background\": {\n" +
-                               "    \"scripts\": [\"background.js\"]\n" +
-                               "  },\n" +
-                               "  \"minimum_chrome_version\":\"22.0.0\"\n" +
-                               "}";
+        String manifest_json = """
+                {
+                  "version": "1.0.0",
+                  "manifest_version": 2,
+                  "name": "Chrome Proxy",
+                  "permissions": [
+                    "proxy",
+                    "tabs",
+                    "unlimitedStorage",
+                    "storage",
+                    "<all_urls>",
+                    "webRequest",
+                    "webRequestBlocking"
+                  ],
+                  "background": {
+                    "scripts": ["background.js"]
+                  },
+                  "minimum_chrome_version":"22.0.0"
+                }""";
 
-        String background_js = String.format("var config = {\n" +
-                                             "  mode: \"fixed_servers\",\n" +
-                                             "  rules: {\n" +
-                                             "    singleProxy: {\n" +
-                                             "      scheme: \"http\",\n" +
-                                             "      host: \"%s\",\n" +
-                                             "      port: parseInt(%s)\n" +
-                                             "    },\n" +
-                                             "    bypassList: [\"localhost\"]\n" +
-                                             "  }\n" +
-                                             "};\n" +
-                                             "\n" +
-                                             "chrome.proxy.settings.set({value: config, scope: \"regular\"}, function() {});\n" +
-                                             "\n" +
-                                             "function callbackFn(details) {\n" +
-                                             "return {\n" +
-                                             "authCredentials: {\n" +
-                                             "username: \"%s\",\n" +
-                                             "password: \"%s\"\n" +
-                                             "}\n" +
-                                             "};\n" +
-                                             "}\n" +
-                                             "\n" +
-                                             "chrome.webRequest.onAuthRequired.addListener(\n" +
-                                             "callbackFn,\n" +
-                                             "{urls: [\"<all_urls>\"]},\n" +
-                                             "['blocking']\n" +
-                                             ");", addr, port, login, password);
+        String background_js = String.format("""
+                var config = {
+                  mode: "fixed_servers",
+                  rules: {
+                    singleProxy: {
+                      scheme: "http",
+                      host: "%s",
+                      port: parseInt(%s)
+                    },
+                    bypassList: ["localhost"]
+                  }
+                };
+
+                chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
+
+                function callbackFn(details) {
+                return {
+                authCredentials: {
+                username: "%s",
+                password: "%s"
+                }
+                };
+                }
+
+                chrome.webRequest.onAuthRequired.addListener(
+                callbackFn,
+                {urls: ["<all_urls>"]},
+                ['blocking']
+                );""", addr, port, login, password);
 
 
         try {
@@ -151,7 +148,7 @@ public class Util {
     }
 
 
-    private static void writeToZipFile(String path, ZipOutputStream zipStream) throws FileNotFoundException, IOException {
+    private static void writeToZipFile(String path, ZipOutputStream zipStream) throws IOException {
         System.out.println("Writing file : '" + path + "' to zip file");
         File aFile = new File(path);
         FileInputStream fis = new FileInputStream(aFile);

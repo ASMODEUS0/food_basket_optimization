@@ -1,7 +1,6 @@
 package com.example.food_basket_optimization.selenium.page;
 
 import com.example.food_basket_optimization.selenium.locator.Locators;
-import com.example.food_basket_optimization.selenium.page.YahooCurrentSearchPage;
 import com.example.food_basket_optimization.selenium.util.Util;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Keys;

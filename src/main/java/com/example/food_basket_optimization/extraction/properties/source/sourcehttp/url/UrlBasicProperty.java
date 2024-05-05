@@ -6,26 +6,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UrlBasicProperties extends UrlPropertiesAbs implements UrlProperties{
+public class UrlBasicProperty extends UrlPropertiesAbs implements UrlProperty {
 
     private final List<ExtractedEntity> referenceEntities;
 
-    public UrlBasicProperties(String protocol, String path, String host) {
+    public UrlBasicProperty(String protocol, String path, String host) {
         super(protocol, path, host);
         this.referenceEntities = new ArrayList<>();
     }
 
-    public UrlBasicProperties(URL url){
+    public UrlBasicProperty(URL url){
         super(url.getProtocol(), url.getPath(), url.getHost());
         this.referenceEntities = new ArrayList<>();
     }
 
-    public UrlBasicProperties(String protocol, String path, String host, List< ExtractedEntity> referenceEntities) {
+    public UrlBasicProperty(String protocol, String path, String host, List< ExtractedEntity> referenceEntities) {
         super(protocol, path, host);
         this.referenceEntities = referenceEntities;
     }
 
-    public UrlBasicProperties(URL url, List<ExtractedEntity> referenceEntities){
+    public UrlBasicProperty(URL url, List<ExtractedEntity> referenceEntities){
         super(url.getProtocol(), url.getPath(), url.getHost());
         this.referenceEntities = referenceEntities;
     }
@@ -37,7 +37,7 @@ public class UrlBasicProperties extends UrlPropertiesAbs implements UrlPropertie
     }
 
     @Override
-    public URL getProperty() {
+    public URL property() {
         return this.getUrl();
     }
 }

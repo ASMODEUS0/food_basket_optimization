@@ -16,8 +16,8 @@ public class SimpleMultiUrl implements UrlMultiProperties {
     }
 
     @Override
-    public List<UrlProperties> multiply() {
-       return List.of(new UrlBasicProperties(protocol, path, host));
+    public List<UrlProperty> multiply() {
+       return List.of(new UrlBasicProperty(protocol, path, host));
     }
 
     @Override

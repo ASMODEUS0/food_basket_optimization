@@ -5,7 +5,7 @@ import com.example.food_basket_optimization.extraction.properties.base.multi.Mul
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import com.example.food_basket_optimization.extraction.properties.util.MultiplierUtil;
-import com.example.food_basket_optimization.extraction.properties.util.Multiplying;
+import com.example.food_basket_optimization.extraction.properties.base.multi.Multiplying;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,9 +27,9 @@ public class UrlMultiPath implements UrlMultiProperties {
     }
 
     @Override
-    public List<UrlProperties> multiply() {
+    public List<UrlProperty> multiply() {
         List<List<SimpleString>> multipliedPathElements = pathElements.stream().map(Multiplying::multiply).toList();
-        List<List<SimpleString>> pathsElements = MultiplierUtil.resolveListedMultiplication(multipliedPathElements);
+        List<List<SimpleString>> pathsElements = MultiplierUtil.directProduct(multipliedPathElements);
 
 
         return convertToUrlsProperties(pathsElements, protocol, host);
@@ -37,14 +37,14 @@ public class UrlMultiPath implements UrlMultiProperties {
 
 
 
-    private List<UrlProperties> convertToUrlsProperties(List<List<SimpleString>> pathsElements, String protocol, String host){
+    private List<UrlProperty> convertToUrlsProperties(List<List<SimpleString>> pathsElements, String protocol, String host){
        return pathsElements.stream().map(pathElements -> convertToUrlProperties(pathElements, protocol, host)).toList();
     }
 
-    private UrlProperties convertToUrlProperties(List<SimpleString> pathElements, String protocol, String host){
+    private UrlProperty convertToUrlProperties(List<SimpleString> pathElements, String protocol, String host){
         SimpleString pathProperty = createPathFromPathElements(pathElements);
-        return new UrlBasicProperties(protocol,
-                pathProperty.getProperty(),
+        return new UrlBasicProperty(protocol,
+                pathProperty.property(),
                 host,
                 pathProperty.getReferenceEntities());
     }
@@ -58,7 +58,7 @@ public class UrlMultiPath implements UrlMultiProperties {
 
         pathElements.forEach(pathElement -> {
             refEntities.addAll(pathElement.getReferenceEntities());
-            pathBuilder.append('/').append(pathElement.getProperty());
+            pathBuilder.append('/').append(pathElement.property());
         });
 
         return new StringProperty(pathBuilder.toString(), refEntities);

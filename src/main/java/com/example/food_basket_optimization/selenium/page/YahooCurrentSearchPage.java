@@ -1,10 +1,7 @@
 package com.example.food_basket_optimization.selenium.page;
 
 import com.example.food_basket_optimization.selenium.locator.Locators;
-import com.example.food_basket_optimization.selenium.page.UnknownPage;
-import com.example.food_basket_optimization.selenium.util.Util;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 

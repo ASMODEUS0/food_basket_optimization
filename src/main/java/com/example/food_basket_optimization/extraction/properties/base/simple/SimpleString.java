@@ -1,6 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.base.simple;
 
-import com.example.food_basket_optimization.extraction.properties.Properties;
+import com.example.food_basket_optimization.extraction.properties.Property;
 
-public interface SimpleString extends Properties<String> {
+public interface SimpleString extends Property<String> {
 }

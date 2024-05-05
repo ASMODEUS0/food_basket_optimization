@@ -1,4 +1,4 @@
-package com.example.food_basket_optimization.extraction.properties.util;
+package com.example.food_basket_optimization.extraction.properties.base.multi;
 
 import java.util.List;
 
