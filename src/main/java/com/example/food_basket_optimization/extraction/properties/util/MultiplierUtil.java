@@ -61,6 +61,7 @@ public class MultiplierUtil {
 
 
     public static List<Object> placeParamsInTheRightOrder(List<?> params, List<? extends Class<?>> fieldsOfObject){
+
         List<Object> result = new ArrayList<>();
         if(params.size() != fieldsOfObject.size()){
             throw new IncompleteArgumentException("The number of parameters does not match the created object");

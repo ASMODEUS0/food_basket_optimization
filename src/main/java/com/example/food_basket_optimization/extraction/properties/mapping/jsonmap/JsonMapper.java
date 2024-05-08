@@ -12,8 +12,9 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import java.util.Collection;
-import java.util.List;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -40,10 +41,36 @@ public class JsonMapper implements Mapper {
             } else {
                 result = List.of(om.readValue(transformedData, property.getClassToMap()));
             }
-            return result;
+            return injectReferenceEntities(result, new ArrayList<>(property.getReferenceEntities()));
         } catch (JsonProcessingException e) {
             log.warn("Fail to map extracted source to: " + property.getClassToMap());
             return List.of(new FailedMapping(e.getMessage(), property.getData(), null));
         }
+    }
+
+
+    public List<ExtractedEntity> injectReferenceEntities(List<ExtractedEntity> mappedEntities, List<ExtractedEntity> referencedEntities){
+        return mappedEntities.stream().map(entity -> injectReferenceEntity(entity, referencedEntities)).toList();
+    }
+
+
+    public ExtractedEntity injectReferenceEntity(ExtractedEntity entity, List<ExtractedEntity> referencedEntities){
+        if(referencedEntities.isEmpty()){
+            return entity;
+        }
+        List<Field> fields = Arrays.stream(entity.getClass().getDeclaredFields()).toList();
+
+        fields.forEach(field -> {
+            Optional<ExtractedEntity> mayBeRefEntityOfFieldType = referencedEntities.stream().filter(refEntity -> refEntity.getClass() == field.getType()).findFirst();
+            mayBeRefEntityOfFieldType.ifPresent(entityOfFieldType-> {
+                try {
+                    field.setAccessible(true);
+                    field.set(entity, entityOfFieldType);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
+        return entity;
     }
 }

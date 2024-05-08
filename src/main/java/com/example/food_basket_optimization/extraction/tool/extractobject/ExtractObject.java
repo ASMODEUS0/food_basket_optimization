@@ -8,10 +8,11 @@ import com.example.food_basket_optimization.extraction.properties.mapping.Mapper
 import com.example.food_basket_optimization.extraction.properties.root.ExtractionProperties;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceResolverContract;
+import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
 import java.util.List;
-
+@Slf4j
 public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObjectContract {
 
 
@@ -26,6 +27,7 @@ public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObje
 
     @Override
     public List<? extends ExtractedEntity> parse() {
+        log.info("Start extracting objects of class: " + properties.getClassToExtract());
         T parsedSource = properties.getParsedSource();
         SourceResolverContract<T> sourceResolver = properties.getSourceResolver();
         List<MapProperty> mapProperties = sourceResolver.getData(parsedSource, properties.getClassToExtract());
