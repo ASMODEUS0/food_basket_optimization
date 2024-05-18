@@ -6,7 +6,7 @@ import com.example.food_basket_optimization.extraction.properties.base.simple.Li
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValue;
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValueUrlProperty;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.KeyValueProperty;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlProperty;
 import com.example.food_basket_optimization.extraction.service.request.util.URIConstructor;
 
@@ -47,8 +47,8 @@ public class SourceHttpProperty implements Property<SourceHttp> {
 
     @Override
     public SourceHttp property() {
-        List<KeyValue> params = this.params.property().stream().map(KeyValueUrlProperty::property).toList();
-        List<KeyValue> headers = this.headers.property().stream().map(KeyValueUrlProperty::property).toList();
+        List<KeyValue> params = this.params.property().stream().map(KeyValueProperty::property).toList();
+        List<KeyValue> headers = this.headers.property().stream().map(KeyValueProperty::property).toList();
         return new SourceHttp(URIConstructor.convertKeyValue(url.property(), params),
                 headers,
                 method,

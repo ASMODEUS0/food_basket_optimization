@@ -1,6 +1,8 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.properties.base.keyvalue.basic.KeyValueBasicProperty;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +27,10 @@ public class KeyValueUrlIterable implements KeyValueUrlMultiProperties {
      * Multiply property by iterating it from startValue to endValue
      */
     @Override
-    public List<KeyValueUrlProperty> multiply() {
-        List<KeyValueUrlProperty> result = new ArrayList<>();
+    public List<KeyValueProperty> multiply() {
+        List<KeyValueProperty> result = new ArrayList<>();
         for (int i = startValue; i <= endValue; i++) {
-            result.add(new KeyValueUrlBasic(key, value + i));
+            result.add(new KeyValueBasicProperty(key, value + i));
         }
         return result;
     }
@@ -36,5 +38,10 @@ public class KeyValueUrlIterable implements KeyValueUrlMultiProperties {
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
         return List.of();
+    }
+
+    @Override
+    public void visit(MultiVisitor visitor) {
+
     }
 }

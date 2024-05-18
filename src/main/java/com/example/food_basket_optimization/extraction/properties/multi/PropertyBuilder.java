@@ -57,12 +57,13 @@ public class PropertyBuilder<T extends Property<?>> {
     }
 
     private List<List<Property<?>>> resolvePostMultiplying(List<Property<?>> propertyParams, PostMultiplyingProperty<?> postMultiProperty) {
-        List<? extends Property<?>> multipliedPostMultiParam = postMultiProperty.multiply(propertyParams);
-
-        return multipliedPostMultiParam.stream().map(postParam -> {
-            List<Property<?>> currentPropertyParams = new ArrayList<>(propertyParams);
-            currentPropertyParams.add(postParam);
-            return currentPropertyParams;
-        }).toList();
+//        List<? extends Property<?>> multipliedPostMultiParam = postMultiProperty.multiply(propertyParams);
+//
+//        return multipliedPostMultiParam.stream().map(postParam -> {
+//            List<Property<?>> currentPropertyParams = new ArrayList<>(propertyParams);
+//            currentPropertyParams.add(postParam);
+//            return currentPropertyParams;
+//        }).toList();
+        return null;
     }
 }

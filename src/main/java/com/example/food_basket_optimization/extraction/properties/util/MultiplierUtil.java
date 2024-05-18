@@ -1,11 +1,13 @@
 package com.example.food_basket_optimization.extraction.properties.util;
 
+import com.example.food_basket_optimization.extraction.util.Util;
 import org.apache.commons.lang.IncompleteArgumentException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MultiplierUtil {
 
@@ -25,23 +27,18 @@ public class MultiplierUtil {
                         List<T> stringProperties = new ArrayList<>(resElements);
                         stringProperties.add(pathElement);
                         return stringProperties;
-                    })).toList();
+                    })).collect(Collectors.toList());
         }
 
         return result;
     }
 
+    public static <T> List<List<T>> equalizationOfParams(List<List< T>> params, List<T> newParam) {
 
 
 
-    public static <T> T createObjectFromMultipliedParams(Constructor<T> objectConstructor, List<Object> multipliedParams) {
 
-
-            try {
-                return objectConstructor.newInstance(multipliedParams.toArray());
-            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+        return null;
     }
 
 
@@ -53,7 +50,7 @@ public class MultiplierUtil {
 
         try {
             Constructor<T> constructor = propertyClass.getConstructor(fieldTypes.toArray(new Class[]{}));
-            return createObjectFromMultipliedParams(constructor, paramsInTheRightOrder);
+            return Util.createObjectFromMultipliedParams(constructor, paramsInTheRightOrder);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }

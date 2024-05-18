@@ -5,6 +5,7 @@ import com.example.food_basket_optimization.extraction.properties.base.simple.Si
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
 import com.example.food_basket_optimization.extraction.properties.util.RefValue;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -34,4 +35,8 @@ public class ContextualStringProperty implements MultiString {
         return result;
     }
 
+    @Override
+    public void visit(MultiVisitor visitor) {
+
+    }
 }

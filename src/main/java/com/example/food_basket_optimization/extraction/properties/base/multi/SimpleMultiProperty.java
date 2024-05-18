@@ -3,13 +3,16 @@ package com.example.food_basket_optimization.extraction.properties.base.multi;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.Property;
 import com.example.food_basket_optimization.extraction.properties.util.MultiplyingProperty;
-import lombok.RequiredArgsConstructor;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 
 import java.util.List;
-@RequiredArgsConstructor
-public class SimpleMultiProperty<T extends Property<?>> implements MultiplyingProperty<T> {
+public class SimpleMultiProperty<S, T extends Property<S>> implements MultiplyingProperty<T> {
 
     private final T property;
+
+    public SimpleMultiProperty(T property){
+        this.property = property;
+    }
 
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
@@ -19,5 +22,10 @@ public class SimpleMultiProperty<T extends Property<?>> implements MultiplyingPr
     @Override
     public List<T> multiply() {
         return List.of(property);
+    }
+
+    @Override
+    public void visit(MultiVisitor visitor) {
+
     }
 }

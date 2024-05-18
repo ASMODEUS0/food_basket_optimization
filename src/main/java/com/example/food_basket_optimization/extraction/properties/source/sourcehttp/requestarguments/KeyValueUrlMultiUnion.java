@@ -4,6 +4,7 @@ import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.base.simple.ListedKeyValueProperty;
 import com.example.food_basket_optimization.extraction.properties.util.MultiplierUtil;
 import com.example.food_basket_optimization.extraction.properties.base.multi.Multiplying;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +20,7 @@ public class KeyValueUrlMultiUnion implements KeyValueUrlMultiUnionProperties {
 
     @Override
     public List<ListedKeyValueProperty> multiply() {
-        List<List<KeyValueUrlProperty>> multipliedKeyValues = properties.stream()
+        List<List<KeyValueProperty>> multipliedKeyValues = properties.stream()
                 .map(Multiplying::multiply)
                 .toList();
         return MultiplierUtil.directProduct(multipliedKeyValues).stream()
@@ -32,5 +33,10 @@ public class KeyValueUrlMultiUnion implements KeyValueUrlMultiUnionProperties {
         return properties.stream().map(KeyValueUrlMultiProperties::getRefClasses)
                 .flatMap(Collection::stream)
                 .toList();
+    }
+
+    @Override
+    public void visit(MultiVisitor visitor) {
+
     }
 }

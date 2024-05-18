@@ -6,6 +6,7 @@ import com.example.food_basket_optimization.extraction.properties.base.simple.Si
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import com.example.food_basket_optimization.extraction.properties.util.MultiplierUtil;
 import com.example.food_basket_optimization.extraction.properties.base.multi.Multiplying;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,5 +71,10 @@ public class UrlMultiPath implements UrlMultiProperties {
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
         return pathElements.stream().map(MultiString::getRefClasses).flatMap(Collection::stream).toList();
+    }
+
+    @Override
+    public void visit(MultiVisitor visitor) {
+        
     }
 }

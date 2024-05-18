@@ -1,36 +1,39 @@
-package com.example.food_basket_optimization.extraction.properties.body;
+package com.example.food_basket_optimization.extraction.properties.base;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.properties.base.multi.MultiString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.SimpleString;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
+import com.example.food_basket_optimization.extraction.properties.util.MultiplyingProperty;
+import com.example.food_basket_optimization.extraction.properties.util.PostMultiplyingProperty;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiVisitor;
 
 
 import java.util.*;
 
-public class JsonMultiBodyProperties implements MultiString {
+ class JsonPostMultiProperty implements PostMultiplyingProperty<SimpleString> {
 
 
-    private final LinkedHashMap<String, MultiString> elements;
+    private final LinkedHashMap<String, MultiplyingProperty<SimpleString>> elements;
 
-    public JsonMultiBodyProperties(LinkedHashMap<String, MultiString> elements) {
+    public JsonPostMultiProperty(LinkedHashMap<String, MultiplyingProperty<SimpleString>> elements) {
         this.elements = elements;
     }
 
+     @Override
+     public List<SimpleString> multiply(List<? extends ExtractedEntity> relatedParams) {
+         LinkedHashMap<String, List<SimpleString>> multipliedElements = new LinkedHashMap<>();
+         elements.forEach((value, object) -> {
+             List<SimpleString> multipliedObjects = object.multiply();
+             multipliedElements.put(value, multipliedObjects);
+         });
 
-    @Override
-    public List<SimpleString> multiply() {
+         List<LinkedHashMap<String, SimpleString>> multipliedJsons = resolveMulti(multipliedElements);
 
-        LinkedHashMap<String, List<SimpleString>> multipliedElements = new LinkedHashMap<>();
-        elements.forEach((value, object) -> {
-            List<SimpleString> multipliedObjects = object.multiply();
-            multipliedElements.put(value, multipliedObjects);
-        });
+         return convert(multipliedJsons);
+     }
 
-        List<LinkedHashMap<String, SimpleString>> multipliedJsons = resolveMulti(multipliedElements);
 
-        return convert(multipliedJsons);
-    }
+
 
     private List<SimpleString> convert(List<LinkedHashMap<String, SimpleString>> jsons) {
         return jsons.stream().map(this::convert).toList();
@@ -82,4 +85,11 @@ public class JsonMultiBodyProperties implements MultiString {
         });
         return result;
     }
-}
+
+    @Override
+    public void visit(MultiVisitor visitor) {
+        visitor.post(this);
+    }
+
+
+ }
