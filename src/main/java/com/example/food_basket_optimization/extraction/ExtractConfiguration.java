@@ -15,7 +15,6 @@ public class ExtractConfiguration {
 
     private final List<ExtractionProperties<?>> propertiesHttp;
 
-
     public ExtractConfiguration(List<ExtractionProperties<?>> propertiesHttp) {
         this.propertiesHttp = propertiesHttp;
     }

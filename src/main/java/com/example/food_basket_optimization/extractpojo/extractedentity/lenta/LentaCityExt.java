@@ -33,4 +33,10 @@ public class LentaCityExt implements ExtractedEntityMappedObject<City> {
                 .longitude(mylong)
                 .build();
     }
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

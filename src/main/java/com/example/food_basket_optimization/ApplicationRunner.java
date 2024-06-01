@@ -12,7 +12,7 @@ public class ApplicationRunner {
         ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
 
         Importer importer = context.getBean(Importer.class);
-        importer.importAll();
+        importer.start();
 
     }
 

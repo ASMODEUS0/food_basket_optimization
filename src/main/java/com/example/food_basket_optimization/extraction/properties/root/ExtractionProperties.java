@@ -11,9 +11,8 @@ import com.example.food_basket_optimization.extraction.properties.mapping.Mapper
  * over the parsing of an entity. Parsing occurs entities of the same type
  */
 public interface ExtractionProperties<T extends ResolvableSource<?>> extends ReferencedExtraction {
-    Class<? extends ExtractedEntity> getClassToExtract();
+    Class<? extends ExtractedEntity> getExtractionClass();
     Mapper getMapper();
     T getParsedSource();
     SourceResolverContract<T> getSourceResolver();
-
 }

@@ -1,6 +1,6 @@
 package com.example.food_basket_optimization.extraction.service.request;
 
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
+import com.example.food_basket_optimization.extraction.properties.base.simple.HttpMethod;
 import com.example.food_basket_optimization.extraction.service.request.components.DefaultRequestComponents;
 import com.example.food_basket_optimization.extraction.service.request.components.GetRequestComponents;
 import com.example.food_basket_optimization.extraction.service.request.components.PostRequestComponents;

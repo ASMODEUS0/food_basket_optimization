@@ -1,11 +1,13 @@
 package com.example.food_basket_optimization.extraction.properties.base.simple;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.properties.SimplePropertyAbs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringProperty implements SimpleString {
+public class StringProperty extends SimplePropertyAbs<String> {
+
 
     private final String property;
 
@@ -30,4 +32,5 @@ public class StringProperty implements SimpleString {
     public String property() {
         return property;
     }
+
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class MultiplierUtil {
 
-    public static <T> List<List<T>> directProduct(List<List< T>> sets) {
+    public static <T> List<List<T>> directProduct(List<List<T>> sets) {
 
         List<List<T>> result = new ArrayList<>(List.of(new ArrayList<>()));
 
@@ -33,14 +33,6 @@ public class MultiplierUtil {
         return result;
     }
 
-    public static <T> List<List<T>> equalizationOfParams(List<List< T>> params, List<T> newParam) {
-
-
-
-
-        return null;
-    }
-
 
     public static <T> T createPropertyFromMultipliedPropertiesParams(List<?> params, Class<T> propertyClass){
 
@@ -56,6 +48,18 @@ public class MultiplierUtil {
         }
     }
 
+
+    public static <T> List<List<T>> replaceValue(int index, List<T> objectParams, List<T> replaceParam ){
+        if(replaceParam.isEmpty() || objectParams.size() < index || index < 0){
+            return List.of(objectParams);
+        }
+
+      return  replaceParam.stream().map(param->{
+            ArrayList<T> objectParamsCopy = new ArrayList<>(objectParams);
+            objectParamsCopy.set(index, param);
+            return objectParamsCopy;
+        }).collect(Collectors.toList());
+    }
 
     public static List<Object> placeParamsInTheRightOrder(List<?> params, List<? extends Class<?>> fieldsOfObject){
 

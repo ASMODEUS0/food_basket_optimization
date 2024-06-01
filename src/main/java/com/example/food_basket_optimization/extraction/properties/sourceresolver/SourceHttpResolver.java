@@ -5,7 +5,7 @@ import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;
 import com.example.food_basket_optimization.extraction.properties.mapping.htmlmap.HtmlMapProperty;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
-import com.example.food_basket_optimization.extraction.properties.source.HttpExtractionSource;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttp;
 import com.example.food_basket_optimization.extraction.service.request.components.DefaultRequestComponents;
 import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;

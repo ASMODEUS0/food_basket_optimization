@@ -29,11 +29,11 @@ public class ApplicationConfiguration {
 
     @Bean
     public List<HttpProxyClient> proxyClients(){
-        HttpProxyClient pc1 = new HttpProxyClient(new HttpHost("212.81.38.180", 9829), "FTuwPy", "HR0tdc");
-        HttpProxyClient pc2 = new HttpProxyClient(new HttpHost("212.81.36.43", 9026), "FTuwPy", "HR0tdc");
-        HttpProxyClient pc3 = new HttpProxyClient(new HttpHost("212.81.37.243", 9271), "FTuwPy", "HR0tdc");
+//        HttpProxyClient pc1 = new HttpProxyClient(new HttpHost("212.81.38.180", 9829), "FTuwPy", "HR0tdc");
+//        HttpProxyClient pc2 = new HttpProxyClient(new HttpHost("212.81.36.43", 9026), "FTuwPy", "HR0tdc");
+//        HttpProxyClient pc3 = new HttpProxyClient(new HttpHost("212.81.37.243", 9271), "FTuwPy", "HR0tdc");
 
-        HttpProxyClient pc4 = new HttpProxyClient(new HttpHost("194.67.220.76", 9448), "d8xEht", "xGee1k");
+//        HttpProxyClient pc4 = new HttpProxyClient(new HttpHost("194.67.220.76", 9448), "d8xEht", "xGee1k");
 
         HttpProxyClient pc5 = new HttpProxyClient(new HttpHost("147.45.55.141", 9220), "8aUe7Z", "eyqfBR");
         HttpProxyClient pc6 = new HttpProxyClient(new HttpHost("46.161.45.148", 9992), "8aUe7Z", "eyqfBR");
@@ -44,11 +44,11 @@ public class ApplicationConfiguration {
 
 
         ArrayList<HttpProxyClient> clients = new ArrayList<>();
-        clients.add(pc1);
-        clients.add(pc2);
+//        clients.add(pc1);
+//        clients.add(pc2);
 //        clients.add(pc3);
 //        clients.add(pc4);
-//        clients.add(pc5);
+        clients.add(pc5);
 //        clients.add(pc6);
 //        clients.add(pc7);
 //        clients.add(pc8);

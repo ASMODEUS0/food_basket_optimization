@@ -6,7 +6,6 @@ import com.example.food_basket_optimization.extraction.Extractor;
 import com.example.food_basket_optimization.extraction.mapper.ExtractedMapper;
 import com.example.food_basket_optimization.util.HibernateUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -24,45 +23,43 @@ import java.util.stream.Stream;
 @Component
 public class Importer {
 
+    class Coordinates {
+        public double lat(){
+            return 0;
+        }
+        public double lon(){
+            return 0;
+        }
+    }
+
+
+
+
     private final Extractor extractor;
     private final ExtractedMapper extractedMapper;
 
 
-    public void importAll() {
-
+    public void start() {
         List<Future<List<? extends ExtractedEntity>>> extractedFutures = extractor.extract();
-
         while (true) {
             if (extractedFutures.stream().filter(Future::isDone).count() == extractedFutures.size()) {
                 break;
             }
         }
-
-
         List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = extractedFutures.stream().map(fut -> {
             try {
                 return fut.get().stream()
                         .flatMap(entity -> entity instanceof ExtractedEntityMappedObject<?> mappedEntity ? Stream.of(mappedEntity) : Stream.empty())
                         .toList();
-
             } catch (InterruptedException | ExecutionException e) {
-
                 throw new RuntimeException(e);
             }
         }).flatMap(Collection::stream).toList();
-
-
         save(extractedEntityMappedObjects);
+        startObservation();
+    }
 
-
-        System.out.println("");
-
-
-
-//        ExtractedEntity extracted = extractedObjects.get(0).get(0);
-
-//        Object map = extractedMapper.map(extracted);
-
+    private void startObservation(){
 
     }
 

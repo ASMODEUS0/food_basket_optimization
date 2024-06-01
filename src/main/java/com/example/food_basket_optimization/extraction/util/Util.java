@@ -1,10 +1,9 @@
 package com.example.food_basket_optimization.extraction.util;
 
 import com.example.food_basket_optimization.extraction.properties.Property;
-import com.example.food_basket_optimization.extraction.properties.base.JsonProperty;
-import com.example.food_basket_optimization.extraction.properties.base.keyvalue.basic.KeyValueBasicProperty;
+import com.example.food_basket_optimization.extraction.properties.base.simple.JsonProperty;
+import com.example.food_basket_optimization.extraction.properties.base.simple.KeyValueSimpleProperty;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -15,13 +14,13 @@ public class Util {
 
     public static void main(String[] args) {
 
-        ArrayList<KeyValueBasicProperty> properties = new ArrayList<>();
-        properties.add(new KeyValueBasicProperty("", ""));
-        properties.add(new KeyValueBasicProperty("", ""));
-        properties.add(new KeyValueBasicProperty("", ""));
+        ArrayList<KeyValueSimpleProperty> properties = new ArrayList<>();
+        properties.add(new KeyValueSimpleProperty("", ""));
+        properties.add(new KeyValueSimpleProperty("", ""));
+        properties.add(new KeyValueSimpleProperty("", ""));
 
 
-        Property<?> objectFromMultipliedParams = createObjectFromMultipliedParams(JsonProperty.getConstructor(), properties);
+        Property objectFromMultipliedParams = createObjectFromMultipliedParams(JsonProperty.getConstructor(), properties);
     }
 
     public static <T> T createObjectFromMultipliedParams(Constructor<T> objectConstructor, List<?> multipliedParams) {
@@ -29,9 +28,9 @@ public class Util {
 
         try {
             Object[] array = multipliedParams.toArray();
-            return objectConstructor.newInstance((Object) array);
-        } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            return objectConstructor.newInstance(array);
+        } catch (InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
+            throw new RuntimeException(e + objectConstructor.toString());
         }
     }
 
@@ -41,7 +40,7 @@ public class Util {
 
         try {
 
-            KeyValueBasicProperty[] array = multipliedParams.toArray(new KeyValueBasicProperty[0]);
+            KeyValueSimpleProperty[] array = multipliedParams.toArray(new KeyValueSimpleProperty[0]);
             return objectConstructor.newInstance((Object) array);
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);

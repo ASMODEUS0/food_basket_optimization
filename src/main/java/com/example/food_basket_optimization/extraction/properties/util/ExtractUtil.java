@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @Log4j2
 public  class ExtractUtil {
 
-    public static Map<? extends ExtractedEntity, Object> getValueFromField(Class<?> clazz,
-                                                                 String fieldName,
-                                                                 ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
+    public static Map<? extends ExtractedEntity, Object> getFieldValueFromContext(Class<?> clazz,
+                                                                                  String fieldName,
+                                                                                  ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
         List<? extends ExtractedEntity> extractedObjects = extractContext.get(clazz);
         if (extractedObjects == null) {
             throw new IllegalStateException("The context does not match the specified properties, class with name: " + clazz.getName() + "missing in context");
@@ -39,5 +39,16 @@ public  class ExtractUtil {
             }
         }).collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey,
                 AbstractMap.SimpleEntry::getValue));
+    }
+
+    public static Object getFieldValueFromObject( String fieldName, Object object){
+        try {
+            Field fieldWithValue = object.getClass().getDeclaredField(fieldName);
+            fieldWithValue.setAccessible(true);
+            Object value = fieldWithValue.get(object);
+            return  value;
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

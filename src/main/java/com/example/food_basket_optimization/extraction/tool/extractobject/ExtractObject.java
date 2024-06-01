@@ -27,13 +27,13 @@ public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObje
 
     @Override
     public List<? extends ExtractedEntity> parse() {
-        log.info("Start extracting objects of class: " + properties.getClassToExtract());
+        log.info("Start extracting objects of class: " + properties.getExtractionClass());
         T parsedSource = properties.getParsedSource();
         SourceResolverContract<T> sourceResolver = properties.getSourceResolver();
-        List<MapProperty> mapProperties = sourceResolver.getData(parsedSource, properties.getClassToExtract());
+        List<MapProperty> mapProperties = sourceResolver.getData(parsedSource, properties.getExtractionClass());
         Mapper mapper = properties.getMapper();
         List<? extends ExtractedEntity> result = mapper.map(mapProperties);
-        extractRuler.getExtractContext().put(properties.getClassToExtract(), result);
+        extractRuler.getExtractContext().put(properties.getExtractionClass(), result);
         extractRuler.getChangeSupport().firePropertyChange(new PropertyChangeEvent(this, null, null, null));
         return result;
     }

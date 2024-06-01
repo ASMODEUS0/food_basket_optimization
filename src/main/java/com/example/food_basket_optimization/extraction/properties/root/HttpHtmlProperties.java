@@ -2,7 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
-import com.example.food_basket_optimization.extraction.properties.source.HttpExtractionSource;
+import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
 import com.example.food_basket_optimization.extraction.properties.mapping.htmlmap.HtmlMapper;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
@@ -36,7 +36,7 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
     }
 
     @Override
-    public Class<? extends ExtractedEntity> getClassToExtract() {
+    public Class<? extends ExtractedEntity> getExtractionClass() {
         return classToParse;
     }
 

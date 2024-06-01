@@ -1,13 +1,11 @@
 package com.example.food_basket_optimization.extraction.service.request.components;
 
-import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.requestarguments.HttpMethod;
-import com.example.food_basket_optimization.extraction.service.request.util.URIConstructor;
+import com.example.food_basket_optimization.extraction.properties.base.simple.HttpMethod;
 import lombok.Getter;
 import org.apache.hc.core5.http.ContentType;
 
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 @Getter

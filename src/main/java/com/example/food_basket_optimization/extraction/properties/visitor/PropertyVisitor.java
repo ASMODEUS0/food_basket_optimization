@@ -1,42 +1,47 @@
 package com.example.food_basket_optimization.extraction.properties.visitor;
 
-import com.example.food_basket_optimization.extraction.properties.ResolvableProperty;
-import com.example.food_basket_optimization.extraction.properties.SimpleResolvableProperty;
-import com.example.food_basket_optimization.extraction.properties.base.prepostmulti.ComplexMultiplyingProperty;
-import com.example.food_basket_optimization.extraction.properties.util.MultiplyingProperty;
-import com.example.food_basket_optimization.extraction.properties.util.PostMultiplyingProperty;
+import com.example.food_basket_optimization.extraction.properties.SimpleProperty;
+import com.example.food_basket_optimization.extraction.properties.propertyconstructor.constructableobject.ConstructableNode;
+import com.example.food_basket_optimization.extraction.properties.propertyconstructor.propertyconstructor.PropertyConstructor;
+import com.example.food_basket_optimization.extraction.properties.base.multi.MultiplyingProperty;
+import com.example.food_basket_optimization.extraction.properties.base.postmulti.PostMultiplyingProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PropertyVisitor implements MultiVisitor{
-    private final PropertyContainerConstructor propertyContainer;
+public class PropertyVisitor implements MultiVisitor {
+    private final MultiPropertyContainer propertyContainer;
 
-    public PropertyVisitor(PropertyContainerConstructor propertyContainer){
-        this.propertyContainer = propertyContainer;
+    public PropertyVisitor() {
+        this.propertyContainer = new MultiPropertyContainer();
+    }
+
+    @Override
+    public void property(SimpleProperty<?> resolvableProperty) {
+        propertyContainer.addResolvedProperty(List.of(resolvableProperty));
     }
 
 
     @Override
-    public void simple(SimpleResolvableProperty<?> resProperty, ResolvableProperty fatherProperty) {
-
+    public void multi(MultiplyingProperty<?> resolvableProperty) {
+        List<? extends SimpleProperty<?>> resolvedProperties = resolvableProperty.multiply();
+        propertyContainer.addResolvedProperty(new ArrayList<>(resolvedProperties));
     }
 
     @Override
-    public void multi(MultiplyingProperty<?> resProperty) {
-       propertyContainer.addResolvedProperty(new ArrayList<>(resProperty.multiply()));
+    public void complex(ConstructableNode<?> resolvableProperty) {
+        List<PropertyConstructor<?>> propertyConstructors = new ArrayList<>(resolvableProperty.constructObject());
+        propertyContainer.addConstructableProperty(propertyConstructors);
+    }
+
+    @Override
+    public void post(PostMultiplyingProperty<?> resolvableProperty) {
+        propertyContainer.addPostProperties(resolvableProperty);
     }
 
 
     @Override
-    public void post(PostMultiplyingProperty<?> resProperty) {
-
+    public PropertyContainer getPropertyContainer() {
+        return propertyContainer;
     }
-
-    @Override
-    public void complex(ComplexMultiplyingProperty<?> resProperty) {
-
-    }
-
-
-
 }

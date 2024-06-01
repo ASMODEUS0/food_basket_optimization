@@ -26,15 +26,22 @@ public class ProxyRequestHandler implements RequestHandler {
 
     @Override
     public List<String> doRequests(List<DefaultRequestComponents> componentsList) {
-        List<HttpUriRequestBase> requests = componentsList.stream().map(RequestProvider::provideRequest).toList();
+        List<HttpUriRequestBase> requests = componentsList.stream()
+                .map(RequestProvider::provideRequest)
+                .toList();
 
-        List<Future<DefaultHttpRequestTaskResult>> responsesFuture = requests.stream().map(request -> {
-            RequestTask task = provider.getTask(request);
-            Callable<DefaultHttpRequestTaskResult> callable = () -> requestExecutor.execute(task, processingRequests);
-            return threadPool.submit(callable);
-        }).toList();
+        List<Future<DefaultHttpRequestTaskResult>> responsesFuture = requests.stream()
+                .map(request -> {
+                    RequestTask task = provider.getTask(request);
+                    Callable<DefaultHttpRequestTaskResult> callable = () -> requestExecutor.execute(task, processingRequests);
+                    return threadPool.submit(callable);
+                })
+                .toList();
+
         List<HttpResponse> httpResponses = RequestUtil.waitingForCompletion(responsesFuture);
-        return httpResponses.stream().map(HttpResponse::getContent).toList();
+        return httpResponses.stream()
+                .map(HttpResponse::getContent)
+                .toList();
 
     }
 

@@ -57,6 +57,7 @@ public class LentaProductExt implements ExtractedEntityMappedObject<Product> {
     public boolean hasPrices;
     @Override
     public Product map(Object... args) {
+
         return null;
     }
 }

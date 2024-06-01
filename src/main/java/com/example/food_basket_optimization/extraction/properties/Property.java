@@ -1,10 +1,8 @@
 package com.example.food_basket_optimization.extraction.properties;
 
-import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.properties.visitor.MultiClient;
+import com.example.food_basket_optimization.extraction.properties.visitor.ReferenceClient;
 
-import java.util.List;
-// todo: make abstract Property
-public interface Property<T> {
-    List<ExtractedEntity> getReferenceEntities();
-    T property();
+public interface Property extends MultiClient, ReferenceClient {
+
 }

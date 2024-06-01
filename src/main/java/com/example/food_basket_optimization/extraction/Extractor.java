@@ -36,24 +36,23 @@ public class Extractor implements ExtractRuler {
     }
 
 
-    public <T extends ResolvableSource<?>> Future<List<? extends ExtractedEntity>> extractEntityWith(ExtractionProperties<T> properties) {
+    public <T extends ResolvableSource<?>> Future<List<? extends ExtractedEntity>> extract(ExtractionProperties<T> properties) {
         ExtractObject<T> extractObject = new ExtractObject<>(this, properties);
         ExtractCallable extractCallable = new ExtractCallable(extractObject);
         addExtractListener(extractCallable);
         return threadPool.submit(extractCallable);
     }
 
-    public List<Future<List<? extends ExtractedEntity>>> extractEntityWith(List<ExtractionProperties<?>> properties) {
-       return properties.stream().map(this::extractEntityWith).toList();
+    public List<Future<List<? extends ExtractedEntity>>> extract(List<ExtractionProperties<?>> properties) {
+        return properties.stream().map(this::extract).toList();
     }
 
 
-
-    public  List<Future<List<? extends ExtractedEntity>>> extract() {
+    public List<Future<List<? extends ExtractedEntity>>> extract() {
         if (extractConfiguration == null) {
             throw new IllegalStateException("Properties configuration is null");
         }
-        return extractEntityWith(extractConfiguration.getPropertiesHttp());
+        return extract(extractConfiguration.getPropertiesHttp());
     }
 
 

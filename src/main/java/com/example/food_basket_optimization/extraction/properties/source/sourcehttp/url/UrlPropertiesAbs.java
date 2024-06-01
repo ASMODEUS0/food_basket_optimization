@@ -1,5 +1,6 @@
 package com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url;
 
+import com.example.food_basket_optimization.extraction.properties.SimplePropertyAbs;
 import lombok.Getter;
 
 import java.net.MalformedURLException;
@@ -7,7 +8,7 @@ import java.net.URL;
 import java.util.List;
 
 @Getter
-public abstract class UrlPropertiesAbs {
+public abstract class UrlPropertiesAbs extends SimplePropertyAbs<URL> {
     private final String protocol;
     private final String path;
     private final String host;
@@ -15,10 +16,12 @@ public abstract class UrlPropertiesAbs {
 
 
 
-    protected UrlPropertiesAbs(String protocol, String path, String host) {
+    protected UrlPropertiesAbs(String protocol, String host, String path) {
         this.protocol = protocol;
         this.path = path;
         this.host = host;
+
+
     }
 
 
