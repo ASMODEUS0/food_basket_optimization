@@ -14,13 +14,12 @@ public class CityService {
     private final CityReadMapper cityReadMapper;
 
 
-
-    public Optional<CityReadDto> findById(Long id){
+    public Optional<CityReadDto> findById(Long id) {
         return cityRepository.findById(id)
                 .map(cityReadMapper::mapFrom);
     }
 
-    public boolean delete(Long id){
+    public boolean delete(Long id) {
         var mayBeCity = cityRepository.findById(id);
         mayBeCity.ifPresent(city -> cityRepository.delete(id));
         return mayBeCity.isPresent();

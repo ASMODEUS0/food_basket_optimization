@@ -1,6 +1,7 @@
 package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.City;
+import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @JsonCollection
 @NoArgsConstructor
 @JsonIgnoreProperties(value = {""})
-public class LentaCityExt implements ExtractedEntityMappedObject<City> {
+public class LentaCityExt implements ExtractedEntity {
     public String id;
     public String name;
     public double lat;
@@ -25,14 +26,14 @@ public class LentaCityExt implements ExtractedEntityMappedObject<City> {
         this.name = name;
     }
 
-    @Override
-    public City map(Object... args) {
-        return City.builder()
-                .nameOfCity(name)
-                .latitude(lat)
-                .longitude(mylong)
-                .build();
-    }
+//    @Override
+//    public City map(Object... args) {
+//        return City.builder()
+//                .nameOfCity(name)
+//                .latitude(lat)
+//                .longitude(mylong)
+//                .build();
+//    }
 
 
     @Override

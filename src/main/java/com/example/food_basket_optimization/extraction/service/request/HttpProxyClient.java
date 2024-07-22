@@ -22,11 +22,10 @@ public class HttpProxyClient {
     private final String password;
 
 
-
-    public HttpProxyClient(HttpHost proxyHost, String login, String password){
+    public HttpProxyClient(HttpHost proxyHost, String login, String password) {
         Objects.requireNonNull(proxyHost);
 
-        this.address =  proxyHost.getHostName();
+        this.address = proxyHost.getHostName();
         this.port = proxyHost.getPort();
         this.login = login;
         this.password = password;

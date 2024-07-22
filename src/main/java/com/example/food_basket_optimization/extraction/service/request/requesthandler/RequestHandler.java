@@ -5,8 +5,5 @@ import com.example.food_basket_optimization.extraction.service.request.component
 import java.util.List;
 
 public interface RequestHandler {
-
     List<String> doRequests(List<DefaultRequestComponents> componentsList);
-
-
 }

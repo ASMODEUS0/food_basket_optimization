@@ -14,7 +14,8 @@ public class HttpProxyClientProvider {
     private final List<SimpleEntry<HttpClientContainer, List<Header>>> httpProxiesWithProcessingCookie;
     private Integer currentClient = 0;
 
-    public HttpProxyClientProvider(List<HttpProxyClient> proxyClients, List<ProcessingProxyCookie> processingList) {
+    public HttpProxyClientProvider(List<HttpProxyClient> proxyClients,
+                                   List<ProcessingProxyCookie> processingList) {
 
         httpProxiesWithProcessingCookie = proxyClients.stream().map(client -> {
 

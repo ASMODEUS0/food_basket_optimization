@@ -24,9 +24,7 @@ import java.util.stream.Stream;
 @Component()
 public class SourceHttpResolver implements SourceResolverContract<ResolvableSource<HttpExtractionSource>> {
 
-
     private ProxyRequestHandler requestHandler;
-
 
     public SourceHttpResolver(ProxyRequestHandler requestHandler) {
         this.requestHandler = requestHandler;
@@ -55,7 +53,6 @@ public class SourceHttpResolver implements SourceResolverContract<ResolvableSour
         long time = System.currentTimeMillis() - l;
         log.info("Execution time of request: " + time * 0.001 + " seconds");
 
-
         List<MapProperty> mapProperties = new ArrayList<>();
 
         for (int i = 0; i < responses.size(); i++) {
@@ -68,6 +65,4 @@ public class SourceHttpResolver implements SourceResolverContract<ResolvableSour
     public void setRequestHandler(ProxyRequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
-
-
 }

@@ -9,15 +9,19 @@ import java.util.List;
 
 public class URIConstructor {
     public static URI convert(URL url, List<String> params) {
-        if (!params.isEmpty()){
-            throw new IllegalArgumentException();
-        }
-        try {
-            String string = url.toString();
-            return new URI(string);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+       if(params.isEmpty()){
+           return URI.create(url.toString());
+       }else{
+           StringBuilder sb = new StringBuilder();
+           sb.append("?");
+           params.forEach(param->{
+               sb.append(param).append("&");
+           });
+           sb.deleteCharAt(sb.length() - 1 );
+           String uriStr = url.toString() + sb;
+
+           return URI.create(uriStr);
+       }
     }
 
 

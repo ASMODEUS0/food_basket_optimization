@@ -17,10 +17,10 @@ public class IterableStringProperty implements MultiplyingProperty<SimplePropert
     private final Integer endValue;
     private final IntFunction<Integer> iterateFunction;
 
-    public IterableStringProperty(SimpleProperty<String> element, SimpleProperty<Integer> initValue, SimpleProperty<Integer> endValue, IntFunction<Integer> iterateFunction) {
-        this.element = element.property();
-        this.initValue = initValue.property();
-        this.endValue = endValue.property();
+    public IterableStringProperty(String element, Integer initValue, Integer endValue, IntFunction<Integer> iterateFunction) {
+        this.element = element;
+        this.initValue = initValue;
+        this.endValue = endValue;
         this.iterateFunction = iterateFunction;
     }
 

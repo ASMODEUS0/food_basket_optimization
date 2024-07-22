@@ -5,6 +5,13 @@ import lombok.Builder;
 
 @Builder
 public class LocationPojo {
-    private Double lat;
-    private Double lon;
+    public Double lat;
+    public Double lon;
+
+    public LocationPojo(Double lat,
+                        Double lon){
+        this.lat = lat;
+        this.lon = lon;
+    }
+
 }

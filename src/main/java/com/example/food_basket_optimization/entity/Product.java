@@ -1,9 +1,6 @@
 package com.example.food_basket_optimization.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +16,14 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double lat;
-    private Double lon;
+    private Integer stock;
+    private String brand;
+    private String title;
+    private String subTitle;
+    private String imageUrl;
+    private Double price;
+    @Enumerated(EnumType.STRING)
+    private ShopType shopType;
+
+
 }

@@ -45,8 +45,7 @@ public  class ExtractUtil {
         try {
             Field fieldWithValue = object.getClass().getDeclaredField(fieldName);
             fieldWithValue.setAccessible(true);
-            Object value = fieldWithValue.get(object);
-            return  value;
+            return fieldWithValue.get(object);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }

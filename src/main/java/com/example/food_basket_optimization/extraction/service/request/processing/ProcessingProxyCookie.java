@@ -6,6 +6,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface ProcessingProxyCookie {
-
     List<Header> processing(String address, Integer port, String login, String password) ;
 }

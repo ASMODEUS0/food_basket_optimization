@@ -1,24 +1,26 @@
 package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
 import com.example.food_basket_optimization.entity.Product;
+import com.example.food_basket_optimization.entity.ShopType;
 import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import java.util.ArrayList;
+
 import java.util.Date;
+
 @JsonCollection
 @JsonRootName(value = "skus")
 public class LentaProductExt implements ExtractedEntityMappedObject<Product> {
 
-    public LentaProductExt(){
+    public LentaProductExt() {
 
     }
+
     public int webControlsShowType;
     public Object description;
     public String quantity;
     public Date promoStart;
     public Date promoEnd;
-    public ArrayList<Double> weightOptionsMax;
     public int defaultSelectedWeightOptionIndex;
     public Object subCategoryUrl;
     public int stock;
@@ -51,13 +53,24 @@ public class LentaProductExt implements ExtractedEntityMappedObject<Product> {
     public boolean isBlur;
     public String placeOutput;
     public boolean isShowOnePrice;
+    public LentaRegularPrice regularPrice;
+    public LentaCardPrice cardPrice;
     public int promotionType;
     public int promoPercent;
     public boolean hasAdultContent;
     public boolean hasPrices;
+
     @Override
     public Product map(Object... args) {
 
-        return null;
+        return Product.builder()
+                .brand(brand)
+                .title(title)
+                .imageUrl(imageUrl)
+                .subTitle(subTitle)
+                .price(cardPrice.value)
+                .stock(stock)
+                .shopType(ShopType.LENTA)
+                .build();
     }
 }

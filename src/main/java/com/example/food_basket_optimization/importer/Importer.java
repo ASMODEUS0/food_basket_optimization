@@ -23,17 +23,6 @@ import java.util.stream.Stream;
 @Component
 public class Importer {
 
-    class Coordinates {
-        public double lat(){
-            return 0;
-        }
-        public double lon(){
-            return 0;
-        }
-    }
-
-
-
 
     private final Extractor extractor;
     private final ExtractedMapper extractedMapper;
@@ -46,7 +35,7 @@ public class Importer {
                 break;
             }
         }
-        List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = extractedFutures.stream().map(fut -> {
+        List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = List.of(extractedFutures.get(2)).stream().map(fut -> {
             try {
                 return fut.get().stream()
                         .flatMap(entity -> entity instanceof ExtractedEntityMappedObject<?> mappedEntity ? Stream.of(mappedEntity) : Stream.empty())
@@ -55,13 +44,11 @@ public class Importer {
                 throw new RuntimeException(e);
             }
         }).flatMap(Collection::stream).toList();
+
         save(extractedEntityMappedObjects);
-        startObservation();
     }
 
-    private void startObservation(){
 
-    }
 
 
     private void save(List<? extends ExtractedEntityMappedObject<?>> objects){
@@ -76,9 +63,5 @@ public class Importer {
 
             session.getTransaction().commit();
         }
-
-
     }
-
-
 }

@@ -53,8 +53,7 @@ public abstract class RepositoryBase<K extends Serializable, E extends BaseEntit
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<E> criteria = criteriaBuilder.createQuery(clazz);
         criteria.from(clazz);
-        var entity = entityManager.createQuery(criteria).getResultList();
-        return entity;
+        return entityManager.createQuery(criteria).getResultList();
     }
 
 }

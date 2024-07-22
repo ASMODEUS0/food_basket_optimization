@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
-
+//todo: May be deleted
 public class PostContextualStringProperty implements PostMultiplyingProperty<SimpleProperty<String>> {
 
 

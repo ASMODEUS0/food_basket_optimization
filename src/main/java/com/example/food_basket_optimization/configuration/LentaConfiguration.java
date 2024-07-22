@@ -2,6 +2,7 @@ package com.example.food_basket_optimization.configuration;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.Property;
+import com.example.food_basket_optimization.extraction.properties.base.multi.properties.IterableStringProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.JsonProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.KeyValueSimpleProperty;
 import com.example.food_basket_optimization.extraction.properties.base.multi.properties.ContextualStringProperty;
@@ -53,34 +54,34 @@ public class LentaConfiguration {
     @Bean
     public List<LentaNodeCodeExtr> lentaNodeCodes() {
         String nodeCodes = """
-                gd6dd9b5e854cf23f28aa622863dd6913
-                geee7643ec01603a5db2cf4819de1a033
-                g6b6be260dbddd6da54dcc3ca020bf380
-                g604e486481b04594c32002c67a2b459a
-                g36505197bc9614e24d1020b3cfb38ee5
-                g7cc5c7251a3e5503dc4122139d606465
-                g523853c00788bbb520b022c130d1ae92
-                g1baf1ddaa150137098383967c9a8e732
-                g301007c55a37d7ff8539f1f169a4b8ae
-                g68552e15008531b8ae99799a1d9391df
-                g9290c81c23578165223ca2befe178b47
-                g6f4a2d852409e5804606d640dc97a2b1
-                gf925791ef5e5040add50a6e391cae599
-                ga4638d8e16b266a51b9906c290531afb
-                gd4625b4c495bddf681f01669988626db
-                gad95d0db03fef392c89dff187253909a
-                g1d79df330af0458391dd6307863d333e
-                g81ed6bb4ec3cd75cbf9117a7e9722a1d
-                g7886175ed64de08827c4fb2a9ad914f3
-                g4258530b46e66c5ac62f88a56ee8bce1
-                gd152557d86db1829c25705de4db3cf66
-                g4477ab807af5fd53f280b1aac7816659
-                gb90175be6caae9b1599e7d11326b22c3
-                gce3c6ce98ad51e02445da35b93d2c7b7
-                ge638b7ffc736e21c16b21710b4086220
-                gb57865aeafbfc5aa8e086b86d3000a27
-                g648e6f3e83892dabd3f63281dab529fd
-                gaaa3a99413aa9e3963f7f07ed7a75ec0""";
+                          g1baf1ddaa150137098383967c9a8e732
+                          g301007c55a37d7ff8539f1f169a4b8ae
+                          g68552e15008531b8ae99799a1d9391df
+                          g9290c81c23578165223ca2befe178b47
+                          g6f4a2d852409e5804606d640dc97a2b1
+                          gf925791ef5e5040add50a6e391cae599
+                          ga4638d8e16b266a51b9906c290531afb
+                          gd4625b4c495bddf681f01669988626db
+                          gad95d0db03fef392c89dff187253909a
+                          g1d79df330af0458391dd6307863d333e
+                          g81ed6bb4ec3cd75cbf9117a7e9722a1d
+                          g7886175ed64de08827c4fb2a9ad914f3
+                          g4258530b46e66c5ac62f88a56ee8bce1
+                          gd152557d86db1829c25705de4db3cf66
+                          g4477ab807af5fd53f280b1aac7816659
+                          gb90175be6caae9b1599e7d11326b22c3
+                          gce3c6ce98ad51e02445da35b93d2c7b7
+                          ge638b7ffc736e21c16b21710b4086220
+                          gb57865aeafbfc5aa8e086b86d3000a27
+                          g648e6f3e83892dabd3f63281dab529fd
+                          gaaa3a99413aa9e3963f7f07ed7a75ec0
+                          geee7643ec01603a5db2cf4819de1a033
+                          g6b6be260dbddd6da54dcc3ca020bf380
+                          g604e486481b04594c32002c67a2b459a
+                          g36505197bc9614e24d1020b3cfb38ee5
+                          g7cc5c7251a3e5503dc4122139d606465
+                          g523853c00788bbb520b022c130d1ae92  
+                          """;
         String[] nodeCodesArr = nodeCodes.split("\n");
         return Stream.of(nodeCodesArr).map(LentaNodeCodeExtr::new).toList();
     }
@@ -103,6 +104,7 @@ public class LentaConfiguration {
                 sourceHttpResolver);
     }
 
+    //
     @Bean
     public HttpJsonProperties lentaShopProperties(JsonMapper mapper,
                                                   SourceHttpResolver resolver,
@@ -148,7 +150,8 @@ public class LentaConfiguration {
         KeyValueSimpleProperty pricesRange = new KeyValueSimpleProperty("pricesRange", "null");
         KeyValueSimpleProperty typeSearch = new KeyValueSimpleProperty("typeSearch", "1");
         KeyValueSimpleProperty limit = new KeyValueSimpleProperty("limit", "24");
-        KeyValueSimpleProperty offset = new KeyValueSimpleProperty("offset", "24");
+        ConstructableNodeImpl<KeyValueSimpleProperty> offset = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("offset"), new IterableStringProperty("", 24, 300, (n) -> n + 24)));
+//        KeyValueSimpleProperty offset = new KeyValueSimpleProperty("offset", "24");
         KeyValueSimpleProperty updateFilters = new KeyValueSimpleProperty("updateFilters", "true");
         KeyValueSimpleProperty sortingType = new KeyValueSimpleProperty("sortingType", "ByPopularity");
 
@@ -157,7 +160,9 @@ public class LentaConfiguration {
 
         KeyValueSimpleProperty userAgent = new KeyValueSimpleProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15");
         KeyValueSimpleProperty contentType = new KeyValueSimpleProperty("Content-Type", "application/json");
-        ConstructableNodeImpl<KeyValueSimpleProperty> cookie = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("Cookie"), new ContextualStringProperty("Store=", extractContext, new RefValue(LentaStoreExt.class, "id"))));
+        KeyValueSimpleProperty cookie = new KeyValueSimpleProperty("Cookie", "Store= 0155");
+
+//        ConstructableNodeImpl<KeyValueSimpleProperty> cookie = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("Cookie"), new ContextualStringProperty("Store=", extractContext, new RefValue(LentaStoreExt.class, "id"))));
 //        KeyValueUrlContextual cookie = new KeyValueUrlContextual("Cookie", "Store=", extractContext, new RefValue(LentaStoreExt.class, "id"));
 
 
@@ -176,7 +181,7 @@ public class LentaConfiguration {
     }
 
     @Bean
-    public HttpProxyClientProvider proxyClientProvider(List<HttpProxyClient> proxyClients) {
+    public HttpProxyClientProvider lentaProxyClientProvider(List<HttpProxyClient> proxyClients) {
         ProcessingProxyCookie processing = (addr, port, login, pass) -> {
             String qratorName = "qrator_jsid";
             String aspNetName = "ASP.NET_SessionId";
@@ -227,9 +232,9 @@ public class LentaConfiguration {
 
     @Bean
     public ProxyRequestHandler lentaProductRequestHandler(DefaultRequestExecutor executor,
-                                                          HttpProxyClientProvider provider,
+                                                          HttpProxyClientProvider lentaProxyClientProvider,
                                                           ProcessingRequest lentaProductProcessingRequest) {
-        ProxyRequestHandler requestHandler = new ProxyRequestHandler(executor, provider);
+        ProxyRequestHandler requestHandler = new ProxyRequestHandler(executor, lentaProxyClientProvider);
         requestHandler.addProcessingRequest(lentaProductProcessingRequest);
         return requestHandler;
     }

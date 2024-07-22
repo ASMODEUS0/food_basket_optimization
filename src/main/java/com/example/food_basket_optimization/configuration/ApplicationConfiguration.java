@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentMap;
 @Configuration
 public class ApplicationConfiguration {
 
-
+    //todo: A context must be an object.
     @Bean
     public ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext(List<LentaNodeCodeExtr> lentaNodeCodes) {
         ConcurrentHashMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractedContext = new ConcurrentHashMap<>();
@@ -49,12 +49,18 @@ public class ApplicationConfiguration {
 //        clients.add(pc3);
 //        clients.add(pc4);
         clients.add(pc5);
-//        clients.add(pc6);
-//        clients.add(pc7);
-//        clients.add(pc8);
-//        clients.add(pc9);
-//        clients.add(pc10);
+        clients.add(pc6);
+        clients.add(pc7);
+        clients.add(pc8);
+        clients.add(pc9);
+        clients.add(pc10);
         return clients;
+    }
+
+
+    @Bean
+    public HttpProxyClientProvider proxyClientProvider(List<HttpProxyClient> proxyClients){
+       return new HttpProxyClientProvider(proxyClients, List.of());
     }
 
 
@@ -62,7 +68,5 @@ public class ApplicationConfiguration {
     public ProxyRequestHandler requestHandler(DefaultRequestExecutor executor, HttpProxyClientProvider proxyClientProvider) {
         return new ProxyRequestHandler(executor, proxyClientProvider);
     }
-
-
 
 }

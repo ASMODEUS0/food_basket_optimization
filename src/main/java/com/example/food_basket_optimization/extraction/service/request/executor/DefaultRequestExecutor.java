@@ -29,7 +29,7 @@ public class DefaultRequestExecutor {
             return new DefaultHttpRequestTaskResult(client, request, response);
         } catch (IOException e) {
             httpClientContainer.free();
-            log.info("Task: "+task.hashCode()+" fail "+request.getMethod()+" request with URI: " + request.getRequestUri());
+            log.error("Task: "+task.hashCode()+" fail "+request.getMethod()+" request with URI: " + request.getRequestUri());
             return new DefaultHttpRequestTaskResult(client, request, new HttpResponse("ERROR", 0));
         }
     }

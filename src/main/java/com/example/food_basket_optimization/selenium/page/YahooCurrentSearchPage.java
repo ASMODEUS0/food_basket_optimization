@@ -13,7 +13,6 @@ public class YahooCurrentSearchPage {
 
     private final WebDriver browser;
     private final WebElement firstLinkButton;
-    private final String initSearchLink = "https://search.yahoo.com/search;_ylt=AwrilvsiuSdm_UEHfpRDDWVH;_ylc=X1MDMTE5NzgwNDg2NwRfcgMyBGZyAwRmcjIDcDpzLHY6c2ZwLG06c2ItdG9wBGdwcmlkA2pmWjJ0LmRKUVFpR09aRGl5TGtoZ0EEbl9yc2x0AzAEbl9zdWdnAzIEb3JpZ2luA3NlYXJjaC55YWhvby5jb20EcG9zAzAEcHFzdHIDBHBxc3RybAMwBHFzdHJsAzkEcXVlcnkDbGVudGEuY29tBHRfc3RtcAMxNzEzODc5MzY0?p=";
 
     public YahooCurrentSearchPage(WebDriver browser) {
         this.browser = browser;
@@ -23,6 +22,7 @@ public class YahooCurrentSearchPage {
 
     public YahooCurrentSearchPage(WebDriver browser, String searchLink) {
         this.browser = browser;
+        String initSearchLink = "https://search.yahoo.com/search;_ylt=AwrilvsiuSdm_UEHfpRDDWVH;_ylc=X1MDMTE5NzgwNDg2NwRfcgMyBGZyAwRmcjIDcDpzLHY6c2ZwLG06c2ItdG9wBGdwcmlkA2pmWjJ0LmRKUVFpR09aRGl5TGtoZ0EEbl9yc2x0AzAEbl9zdWdnAzIEb3JpZ2luA3NlYXJjaC55YWhvby5jb20EcG9zAzAEcHFzdHIDBHBxc3RybAMwBHFzdHJsAzkEcXVlcnkDbGVudGEuY29tBHRfc3RtcAMxNzEzODc5MzY0?p=";
         browser.get(initSearchLink + searchLink);
         log.info("SELENIUM get search with link: " + searchLink);
 
