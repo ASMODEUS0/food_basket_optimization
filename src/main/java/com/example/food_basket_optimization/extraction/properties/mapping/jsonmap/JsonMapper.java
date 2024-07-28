@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -24,7 +25,7 @@ public class JsonMapper implements Mapper {
     public List<ExtractedEntity> map(List<? extends MapProperty> properties) {
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return properties.stream().map(this::map).flatMap(Collection::stream).toList();
+        return properties.stream().map(this::map).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public List<ExtractedEntity> map(MapProperty property) {

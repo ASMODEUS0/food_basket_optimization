@@ -1,6 +1,8 @@
 package com.example.food_basket_optimization.extraction.properties.root;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.filtering.FilterRule;
+import com.example.food_basket_optimization.extraction.filtering.FilterType;
 import com.example.food_basket_optimization.extraction.properties.source.ResolvableSource;
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.HttpExtractionSource;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
@@ -49,11 +51,19 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
     public SourceResolverContract<ResolvableSource<HttpExtractionSource> > getSourceResolver() {
         return sourceResolver;
     }
-
-
-
     @Override
     public List<Class<? extends ExtractedEntity>> getRefClasses() {
        return resolvableSource.getRefClasses();
     }
+    
+    @Override
+    public List<FilterRule> getFilterRules() {
+        return null;
+    }
+
+    @Override
+    public void addFilterRule(String fieldName, FilterType type) {
+        //todo: put filtering in abstract class
+    }
+
 }

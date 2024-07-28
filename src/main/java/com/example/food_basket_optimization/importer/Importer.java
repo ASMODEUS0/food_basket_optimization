@@ -35,17 +35,19 @@ public class Importer {
                 break;
             }
         }
-        List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = List.of(extractedFutures.get(2)).stream().map(fut -> {
-            try {
-                return fut.get().stream()
-                        .flatMap(entity -> entity instanceof ExtractedEntityMappedObject<?> mappedEntity ? Stream.of(mappedEntity) : Stream.empty())
-                        .toList();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }).flatMap(Collection::stream).toList();
 
-        save(extractedEntityMappedObjects);
+        System.out.println("");
+//        List<? extends ExtractedEntityMappedObject<?>> extractedEntityMappedObjects = Stream.of(extractedFutures.get(1)).map(fut -> {
+//            try {
+//                return fut.get().stream()
+//                        .flatMap(entity -> entity instanceof ExtractedEntityMappedObject<?> mappedEntity ? Stream.of(mappedEntity) : Stream.empty())
+//                        .toList();
+//            } catch (InterruptedException | ExecutionException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }).flatMap(Collection::stream).toList();
+//
+//        save(extractedEntityMappedObjects);
     }
 
 

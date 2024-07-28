@@ -3,6 +3,7 @@ package com.example.food_basket_optimization.extraction.tool.extractobject;
 
 import com.example.food_basket_optimization.extraction.ExtractRuler;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.filtering.Filter;
 import com.example.food_basket_optimization.extraction.properties.mapping.MapProperty;
 import com.example.food_basket_optimization.extraction.properties.mapping.Mapper;
 import com.example.food_basket_optimization.extraction.properties.root.ExtractionProperties;
@@ -11,6 +12,7 @@ import com.example.food_basket_optimization.extraction.properties.sourceresolver
 import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.List;
 @Slf4j
 public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObjectContract {
@@ -18,10 +20,12 @@ public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObje
 
     private final ExtractRuler extractRuler;
     private final ExtractionProperties<T> properties;
+    private final Filter filter;
 
     public ExtractObject(ExtractRuler extractRuler, ExtractionProperties<T> properties) {
         this.extractRuler = extractRuler;
         this.properties = properties;
+        filter = new Filter();
     }
 
 
@@ -33,6 +37,7 @@ public class ExtractObject<T extends ResolvableSource<?>> implements ExtractObje
         List<MapProperty> mapProperties = sourceResolver.getData(parsedSource, properties.getExtractionClass());
         Mapper mapper = properties.getMapper();
         List<? extends ExtractedEntity> result = mapper.map(mapProperties);
+        filter.filter(result, properties.getFilterRules());
         extractRuler.getExtractContext().put(properties.getExtractionClass(), result);
         extractRuler.getChangeSupport().firePropertyChange(new PropertyChangeEvent(this, null, null, null));
         return result;

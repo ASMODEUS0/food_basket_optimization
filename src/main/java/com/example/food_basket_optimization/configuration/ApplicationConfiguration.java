@@ -58,15 +58,15 @@ public class ApplicationConfiguration {
     }
 
 
-    @Bean
-    public HttpProxyClientProvider proxyClientProvider(List<HttpProxyClient> proxyClients){
-       return new HttpProxyClientProvider(proxyClients, List.of());
-    }
-
-
-    @Bean
-    public ProxyRequestHandler requestHandler(DefaultRequestExecutor executor, HttpProxyClientProvider proxyClientProvider) {
-        return new ProxyRequestHandler(executor, proxyClientProvider);
-    }
+//    @Bean
+//    public HttpProxyClientProvider proxyClientProvider(List<HttpProxyClient> proxyClients){
+//       return new HttpProxyClientProvider(proxyClients, List.of());
+//    }
+//
+//
+//    @Bean
+//    public ProxyRequestHandler requestHandler(DefaultRequestExecutor executor, HttpProxyClientProvider proxyClientProvider) {
+//        return new ProxyRequestHandler(executor, proxyClientProvider);
+//    }
 
 }

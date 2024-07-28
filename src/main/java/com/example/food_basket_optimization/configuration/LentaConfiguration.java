@@ -1,6 +1,8 @@
 package com.example.food_basket_optimization.configuration;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
+import com.example.food_basket_optimization.extraction.filtering.FilterRule;
+import com.example.food_basket_optimization.extraction.filtering.FilterType;
 import com.example.food_basket_optimization.extraction.properties.Property;
 import com.example.food_basket_optimization.extraction.properties.base.multi.properties.IterableStringProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.JsonProperty;
@@ -25,7 +27,9 @@ import com.example.food_basket_optimization.extraction.service.request.HttpProxy
 import com.example.food_basket_optimization.extraction.service.request.executor.DefaultRequestExecutor;
 import com.example.food_basket_optimization.extraction.service.request.processing.ProcessingProxyCookie;
 import com.example.food_basket_optimization.extraction.service.request.processing.ProcessingRequest;
+import com.example.food_basket_optimization.extraction.service.request.requesthandler.DefaultRequestHandler;
 import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;
+import com.example.food_basket_optimization.extraction.service.request.requesthandler.RequestHandler;
 import com.example.food_basket_optimization.extraction.service.request.util.RequestUtil;
 import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.*;
 import com.example.food_basket_optimization.selenium.page.UnknownPage;
@@ -109,7 +113,8 @@ public class LentaConfiguration {
     public HttpJsonProperties lentaShopProperties(JsonMapper mapper,
                                                   SourceHttpResolver resolver,
                                                   ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
-        ListedConstructableNode<PathProperty> pathConstructable = new ListedConstructableNode<>(PathProperty.getConstructor(), List.of(new StringProperty("api"),
+        ListedConstructableNode<PathProperty> pathConstructable = new ListedConstructableNode<>(PathProperty.getConstructor(), List.of(
+                new StringProperty("api"),
                 new StringProperty("v2"),
                 new StringProperty("cities"),
                 new ContextualStringProperty("", extractContext, new RefValue(LentaCityExt.class, "id")),
@@ -123,28 +128,27 @@ public class LentaConfiguration {
 
         ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(rootConstrObject);
 
-        return new HttpJsonProperties(resolvableSource,
+        HttpJsonProperties httpJsonProperties = new HttpJsonProperties(resolvableSource,
                 LentaStoreExt.class,
                 mapper,
                 resolver);
+        httpJsonProperties.addFilterRule("cityKey", FilterType.UNIQUE);
+        return httpJsonProperties;
     }
 
     @Bean
     public HttpJsonProperties lentaProductProperties(JsonMapper mapper,
                                                      SourceHttpResolver resolver,
                                                      ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext,
-                                                     ProxyRequestHandler lentaProductRequestHandler) {
+                                                     DefaultRequestHandler requestHandler) {
 
 
-        resolver.setRequestHandler(lentaProductRequestHandler);
-
+        resolver.setRequestHandler(requestHandler);
         UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api/v1/skus/list");
-
         HttpMethod method = HttpMethod.POST;
 
         ConstructableNodeImpl<KeyValueSimpleProperty> nodeCode = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("nodeCode"),
                 new ContextualStringProperty("", extractContext, new RefValue(LentaNodeCodeExtr.class, "nodeCode"))));
-
         KeyValueSimpleProperty filters = new KeyValueSimpleProperty("filters", "[]");
         KeyValueSimpleProperty tag = new KeyValueSimpleProperty("tag", "");
         KeyValueSimpleProperty pricesRange = new KeyValueSimpleProperty("pricesRange", "null");
@@ -180,63 +184,65 @@ public class LentaConfiguration {
                 resolver);
     }
 
-    @Bean
-    public HttpProxyClientProvider lentaProxyClientProvider(List<HttpProxyClient> proxyClients) {
-        ProcessingProxyCookie processing = (addr, port, login, pass) -> {
-            String qratorName = "qrator_jsid";
-            String aspNetName = "ASP.NET_SessionId";
-            String customerIdName = "CustomerId";
-            String validationTokenName = "ValidationToken";
-            File chromeProxyExtension = Util.getProxyExtensions(addr, port.toString(), login, pass);
-            ChromeOptions options = DriverOptions.defaultParseChromeDriverOptions();
+//    @Bean
+//    public HttpProxyClientProvider lentaProxyClientProvider(List<HttpProxyClient> proxyClients) {
+//        ProcessingProxyCookie processing = (addr, port, login, pass) -> {
+//            String qratorName = "qrator_jsid";
+//            String aspNetName = "ASP.NET_SessionId";
+//            String customerIdName = "CustomerId";
+//            String validationTokenName = "ValidationToken";
+//            File chromeProxyExtension = Util.getProxyExtensions(addr, port.toString(), login, pass);
+//            ChromeOptions options = DriverOptions.defaultParseChromeDriverOptions();
+//
+//            options.addExtensions(chromeProxyExtension);
+//
+//            ChromeDriver browser = new ChromeDriver(options);
+//
+//            YahooCurrentSearchPage yahooCurrentSearchPage = new YahooCurrentSearchPage(browser, "lenta.com");
+//            UnknownPage unknownPage = yahooCurrentSearchPage.clickFirstLink();
+//
+//            Cookie qratorCookie = unknownPage.getCookie(qratorName);
+//            Cookie aspNetCookie = unknownPage.getCookie(aspNetName);
+//            Cookie customerIdCookie = unknownPage.getCookie(customerIdName);
+//            Cookie validationTokenCookie = unknownPage.getCookie(validationTokenName);
+//            BasicHeader cookie = new BasicHeader("Cookie", aspNetCookie.getName() + "=" + aspNetCookie.getValue());
+//            BasicHeader cookie1 = new BasicHeader("Cookie", qratorCookie.getName() + "=" + qratorCookie.getValue());
+//            BasicHeader cookie2 = new BasicHeader("Cookie", validationTokenCookie.getName() + "=" + validationTokenCookie.getValue());
+//            BasicHeader cookie3 = new BasicHeader("Cookie", customerIdCookie.getName() + "=" + customerIdCookie.getValue());
+//
+//            browser.quit();
+//            return List.of(cookie3, cookie2, cookie1, cookie);
+//        };
+//        return new HttpProxyClientProvider(proxyClients, List.of(processing));
+//    }
 
-            options.addExtensions(chromeProxyExtension);
+//    @Bean
+//    public ProcessingRequest lentaProductProcessingRequest() {
+//        return (client, request) -> {
+//            StringBuilder sb = new StringBuilder();
+//            List<Header> cookieHeaders = Lists.reverse(RequestUtil.getHeaders("Cookie", request));
+//            request.removeHeaders("Cookie");
+//            cookieHeaders.forEach(cookieHeader -> sb.append(cookieHeader.getValue()).append(";"));
+//            BasicHeader cookie = new BasicHeader("Cookie", sb.toString());
+//            request.addHeader(cookie);
+//
+//            try {
+//                Thread.sleep(new Random().nextInt(1500, 2100));
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        };
+//    }
 
-            ChromeDriver browser = new ChromeDriver(options);
+//    @Bean
+//    public ProxyRequestHandler lentaProductRequestHandler(DefaultRequestExecutor executor,
+//                                                          HttpProxyClientProvider lentaProxyClientProvider,
+//                                                          ProcessingRequest lentaProductProcessingRequest) {
+//        ProxyRequestHandler requestHandler = new ProxyRequestHandler(executor, lentaProxyClientProvider);
+//        requestHandler.addProcessingRequest(lentaProductProcessingRequest);
+//        return requestHandler;
+//    }
 
-            YahooCurrentSearchPage yahooCurrentSearchPage = new YahooCurrentSearchPage(browser, "lenta.com");
-            UnknownPage unknownPage = yahooCurrentSearchPage.clickFirstLink();
 
-            Cookie qratorCookie = unknownPage.getCookie(qratorName);
-            Cookie aspNetCookie = unknownPage.getCookie(aspNetName);
-            Cookie customerIdCookie = unknownPage.getCookie(customerIdName);
-            Cookie validationTokenCookie = unknownPage.getCookie(validationTokenName);
-            BasicHeader cookie = new BasicHeader("Cookie", aspNetCookie.getName() + "=" + aspNetCookie.getValue());
-            BasicHeader cookie1 = new BasicHeader("Cookie", qratorCookie.getName() + "=" + qratorCookie.getValue());
-            BasicHeader cookie2 = new BasicHeader("Cookie", validationTokenCookie.getName() + "=" + validationTokenCookie.getValue());
-            BasicHeader cookie3 = new BasicHeader("Cookie", customerIdCookie.getName() + "=" + customerIdCookie.getValue());
-
-            browser.quit();
-            return List.of(cookie3, cookie2, cookie1, cookie);
-        };
-        return new HttpProxyClientProvider(proxyClients, List.of(processing));
-    }
-
-    @Bean
-    public ProcessingRequest lentaProductProcessingRequest() {
-        return (client, request) -> {
-            StringBuilder sb = new StringBuilder();
-            List<Header> cookieHeaders = Lists.reverse(RequestUtil.getHeaders("Cookie", request));
-            request.removeHeaders("Cookie");
-            cookieHeaders.forEach(cookieHeader -> sb.append(cookieHeader.getValue()).append(";"));
-            BasicHeader cookie = new BasicHeader("Cookie", sb.toString());
-            request.addHeader(cookie);
-
-            try {
-                Thread.sleep(new Random().nextInt(1500, 2100));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        };
-    }
-
-    @Bean
-    public ProxyRequestHandler lentaProductRequestHandler(DefaultRequestExecutor executor,
-                                                          HttpProxyClientProvider lentaProxyClientProvider,
-                                                          ProcessingRequest lentaProductProcessingRequest) {
-        ProxyRequestHandler requestHandler = new ProxyRequestHandler(executor, lentaProxyClientProvider);
-        requestHandler.addProcessingRequest(lentaProductProcessingRequest);
-        return requestHandler;
-    }
 
 }

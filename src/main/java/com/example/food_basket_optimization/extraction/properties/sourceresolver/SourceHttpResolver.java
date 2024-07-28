@@ -9,6 +9,7 @@ import com.example.food_basket_optimization.extraction.properties.source.sourceh
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.SourceHttp;
 import com.example.food_basket_optimization.extraction.service.request.components.DefaultRequestComponents;
 import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;
+import com.example.food_basket_optimization.extraction.service.request.requesthandler.RequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ContentType;
 import org.springframework.context.annotation.Scope;
@@ -24,9 +25,9 @@ import java.util.stream.Stream;
 @Component()
 public class SourceHttpResolver implements SourceResolverContract<ResolvableSource<HttpExtractionSource>> {
 
-    private ProxyRequestHandler requestHandler;
+    private RequestHandler requestHandler;
 
-    public SourceHttpResolver(ProxyRequestHandler requestHandler) {
+    public SourceHttpResolver(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
 
@@ -62,7 +63,7 @@ public class SourceHttpResolver implements SourceResolverContract<ResolvableSour
     }
 
 
-    public void setRequestHandler(ProxyRequestHandler requestHandler) {
+    public void setRequestHandler(RequestHandler requestHandler) {
         this.requestHandler = requestHandler;
     }
 }

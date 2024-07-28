@@ -14,8 +14,8 @@ public class ApplicationRunner {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(ApplicationRunner.class, args);
-//        Importer importer = context.getBean(Importer.class);
-//        importer.start();
+        Importer importer = context.getBean(Importer.class);
+        importer.start();
 //        StoreRepository storeRepository = new StoreRepository();
 //
 //        List<Store> all = storeRepository.getAll();
