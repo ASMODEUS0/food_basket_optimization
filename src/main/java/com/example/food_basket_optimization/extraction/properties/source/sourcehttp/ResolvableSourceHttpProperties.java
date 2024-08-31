@@ -18,9 +18,7 @@ public class ResolvableSourceHttpProperties implements ResolvableSource<HttpExtr
     private final ConstructableRootObject<SourceHttpProperty> constructableSource;
 
     public ResolvableSourceHttpProperties(ConstructableRootObject<SourceHttpProperty> constructableSource) {
-
         this.constructableSource = constructableSource;
-
     }
 
 

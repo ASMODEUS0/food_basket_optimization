@@ -25,6 +25,7 @@ public interface ExtractionProperties<T extends ResolvableSource<?>> extends Ref
 
     List<FilterRule> getFilterRules();
 
-    void addFilterRule(String fieldName, FilterType type);
+    void addFilterRule(String fieldName, FilterType type,  Object... args);
+
 
 }

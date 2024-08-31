@@ -12,6 +12,7 @@ import com.example.food_basket_optimization.extraction.properties.mapping.Mapper
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HttpJsonProperties implements ExtractionProperties<ResolvableSource<HttpExtractionSource>> {
@@ -60,15 +61,18 @@ public class HttpJsonProperties implements ExtractionProperties<ResolvableSource
         return filterRules;
     }
 
+
+
     @Override
-    public void addFilterRule(String fieldName, FilterType type) {
+    public void addFilterRule(String fieldName, FilterType type, Object... args) {
         try {
             Field field = extractionClass.getField(fieldName);
-            filterRules.add(new FilterRule(field, type));
+            filterRules.add(new FilterRule(field, type, Arrays.stream(args).toList()));
         } catch (NoSuchFieldException e) {
             throw new RuntimeException("Exception: " + e + " Incorrect field name for extraction class");
         }
     }
+
 
 
     @Override
