@@ -62,7 +62,7 @@ public class HttpHtmlProperties implements ExtractionProperties<ResolvableSource
     }
 
     @Override
-    public void addFilterRule(String fieldName, FilterType type) {
+    public void addFilterRule(String fieldName, FilterType type, Object... args) {
         //todo: put filtering in abstract class
     }
 

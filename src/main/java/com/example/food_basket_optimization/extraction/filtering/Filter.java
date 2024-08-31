@@ -17,6 +17,9 @@ public class Filter {
     public <T> void filter(List<T> objects, FilterRule rule) {
         if (Objects.requireNonNull(rule.getFilterType()) == FilterType.UNIQUE) {
             filterUnique(objects, rule.getField());
+        } else if (Objects.requireNonNull(rule.getFilterType()) == FilterType.EQUAL) {
+
+            filterEqual(objects, rule.getField(), rule.getArgs());
         }
     }
 
@@ -37,6 +40,30 @@ public class Filter {
             }
 
         });
+    }
+
+    private <T> void filterEqual(List<T> objects, Field field, List<Object> args) {
+        ArrayList<T> objectsCopy = new ArrayList<>(objects);
+
+        if (args.size() == 0) {
+            throw new IllegalArgumentException("FilterType EQUAL requires at least one arg");
+        }
+
+        objectsCopy.forEach(object -> {
+            Object fieldValue = ReflectionUtils.getField(field, object);
+            boolean equal = false;
+
+            for (Object arg : args) {
+                if(arg.equals(fieldValue)){
+                    equal = true;
+                }
+            }
+            if(!equal){
+                objects.remove(object);
+            }
+        });
+
+
     }
 
 }
