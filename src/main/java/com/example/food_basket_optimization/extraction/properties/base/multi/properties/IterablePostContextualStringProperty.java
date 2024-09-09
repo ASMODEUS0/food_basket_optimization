@@ -2,6 +2,7 @@ package com.example.food_basket_optimization.extraction.properties.base.multi.pr
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.ReferencedExtractedEntity;
+import com.example.food_basket_optimization.extraction.ReferencedExtraction;
 import com.example.food_basket_optimization.extraction.properties.SimpleProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
 import com.example.food_basket_optimization.extraction.properties.util.ExtractUtil;
@@ -97,6 +98,6 @@ public class IterablePostContextualStringProperty implements PostMultiplyingProp
 
     @Override
     public void visit(ReferenceVisitor visitor) {
-        visitor.visitReferenced(this);
+        visitor.visit((ReferencedExtraction) this);
     }
 }

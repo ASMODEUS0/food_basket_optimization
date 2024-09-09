@@ -3,8 +3,8 @@ package com.example.food_basket_optimization.extraction.properties.propertyconst
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.SimpleProperty;
 import com.example.food_basket_optimization.extraction.properties.base.postmulti.PostMultiplyingProperty;
+import com.example.food_basket_optimization.extraction.properties.propertyconstructor.PropertyParamsContainer;
 import com.example.food_basket_optimization.extraction.properties.propertyconstructor.PropertySource;
-import com.example.food_basket_optimization.extraction.properties.util.MultiplierUtil;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -24,27 +24,31 @@ public abstract class PropertyConstructorAbs<T extends SimpleProperty<?>> implem
 
     protected List<List<SimpleProperty<?>>> resolvePostConstruct(List<ExtractedEntity> refEntities){
 
-        Map<Integer, PostMultiplyingProperty<?>> indexPostParamMap = source.getPostResolvedProperties();
-        Map<Integer, PropertyConstructor<?>> indexConstructedParamMap = source.getConstructedResolvedProperties();
-        List<SimpleProperty<?>> resolvedParams = source.getResolvedProperties();
+        //Defining parameters
+        Map<Integer, PostMultiplyingProperty<?>> indexPostParamMap = source.postResolvedProperties();
+        Map<Integer, PropertyConstructor<?>> indexConstructedParamMap = source.constructedResolvedProperties();
+        PropertyParamsContainer initContainer = new PropertyParamsContainer(source.resolvedProperties());
 
-        List<List<SimpleProperty<?>>> result = new ArrayList<>(List.of(resolvedParams));
-
-        List<ExtractedEntity> currentRefEntities = new ArrayList<>(source.getRefEntities());
-        currentRefEntities.addAll(refEntities);
+        List<PropertyParamsContainer> paramsContainers = new ArrayList<>(List.of(initContainer));
 
         for(Map.Entry<Integer, PropertyConstructor<?>> indexConstructedParam : indexConstructedParamMap.entrySet()){
-
             PropertyConstructor<?> constructedParam = indexConstructedParam.getValue();
             Integer index = indexConstructedParam.getKey();
 
-            List<? extends SimpleProperty<?>> params = constructedParam.postConstruct(currentRefEntities);
 
-            List<List<SimpleProperty<?>>> resultCopy = new ArrayList<>(result);
-
-            result = resultCopy.stream().flatMap(resultParams-> MultiplierUtil.replaceValue(index, resultParams, new ArrayList<>(params)).stream()).toList();
+            List<PropertyParamsContainer> resultContainers = new ArrayList<>();
 
 
+            for(PropertyParamsContainer paramsContainer: paramsContainers){
+                ArrayList<ExtractedEntity> objects = new ArrayList<>(refEntities);
+                objects.addAll(paramsContainer.getRefEntities());
+                List<? extends SimpleProperty<?>> params = constructedParam.postConstruct(objects);
+
+              resultContainers = params.stream().map(param -> paramsContainer.doCopyWithSetParam(index, param)).toList();
+
+            }
+
+            paramsContainers = resultContainers;
         }
 
         for(Map.Entry<Integer, PostMultiplyingProperty<?>> indexPostParam : indexPostParamMap.entrySet()){
@@ -52,12 +56,23 @@ public abstract class PropertyConstructorAbs<T extends SimpleProperty<?>> implem
             PostMultiplyingProperty<?> constructedParam = indexPostParam.getValue();
             Integer index = indexPostParam.getKey();
 
-            List<? extends SimpleProperty<?>> params = constructedParam.multiply(currentRefEntities);
-            List<List<SimpleProperty<?>>> resultCopy = new ArrayList<>(result);
-            result = resultCopy.stream().flatMap(resultParams-> MultiplierUtil.replaceValue(index, resultParams, new ArrayList<>(params)).stream()).toList();
+
+            List<PropertyParamsContainer> resultContainers = new ArrayList<>();
+
+            for(PropertyParamsContainer paramsContainer: paramsContainers){
+
+                ArrayList<ExtractedEntity> objects = new ArrayList<>(refEntities);
+                objects.addAll(paramsContainer.getRefEntities());
+                List<? extends SimpleProperty<?>> params = constructedParam.multiply(objects);
+
+                resultContainers = params.stream().map(param -> paramsContainer.doCopyWithSetParam(index, param)).toList();
+
+            }
+
+            paramsContainers = resultContainers;
         }
 
-        return result;
+        return paramsContainers.stream().map(PropertyParamsContainer::toList).toList();
     }
 
 

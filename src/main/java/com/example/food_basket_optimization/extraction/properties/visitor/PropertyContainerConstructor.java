@@ -7,9 +7,9 @@ import com.example.food_basket_optimization.extraction.properties.base.postmulti
 import java.util.List;
 
 public interface PropertyContainerConstructor {
-    void addResolvedProperty(List<SimpleProperty<?>> property);
+    void addResolvedParam(List<SimpleProperty<?>> property);
 
-    void addPostProperties(PostMultiplyingProperty<?> postResolvedProperty);
+    void addPostParam(PostMultiplyingProperty<?> postResolvedProperty);
 
     void addConstructableProperty(List<PropertyConstructor<?>> constructableProperty);
 

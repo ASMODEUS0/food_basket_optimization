@@ -38,7 +38,9 @@ public class ConstructableRootObjectImpl<T extends SimpleProperty<?>> implements
 
         List<PropertySource> sources = propertyVisitor.getPropertyContainer().getSources();
 
-        List<DefaultPropertyConstructor<T>> propertyConstructor = sources.stream().map(source -> new DefaultPropertyConstructor<>(source, constructor)).toList();
+        List<DefaultPropertyConstructor<T>> propertyConstructor = sources.stream()
+                .map(source -> new DefaultPropertyConstructor<>(source, constructor))
+                .toList();
 
         return propertyConstructor.stream().map(constructedObject -> constructedObject.postConstruct(List.of())).flatMap(Collection::stream).toList();
     }

@@ -11,14 +11,12 @@ public class DefaultReferenceVisitor implements ReferenceVisitor{
     public DefaultReferenceVisitor(ConstructableRootObject<?> rootObject) {
         this.rootObject = rootObject;
     }
-
     @Override
-    public void visitReferenced(ReferencedExtraction referencedProperty) {
+    public void visit(ReferencedExtraction referencedProperty) {
         rootObject.addRefEntitiesTypes(referencedProperty.getRefClasses());
     }
 
     @Override
     public void visit(Property property) {
-
     }
 }

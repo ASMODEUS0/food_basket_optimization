@@ -45,6 +45,6 @@ public class ContextualStringProperty implements MultiString, ReferencedExtracti
 
     @Override
     public void visit(ReferenceVisitor visitor) {
-        visitor.visitReferenced(this);
+        visitor.visit((ReferencedExtraction) this);
     }
 }

@@ -39,7 +39,7 @@ public class JsonProperty extends SimplePropertyAbs<String> {
         bodyBuilder.append('{');
 
         elements.forEach(element -> {
-            bodyBuilder.append('"').append(element.key()).append("\" ").append(':').append('"').append(element.value()).append('"');
+            bodyBuilder.append('"').append(element.key()).append("\" ").append(':').append(element.value());
             if (elements.get(elements.size() - 1) != element) {
                 bodyBuilder.append(',');
             }

@@ -21,7 +21,7 @@ public  class ExtractUtil {
                                                                                   ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
         List<? extends ExtractedEntity> extractedObjects = extractContext.get(clazz);
         if (extractedObjects == null) {
-            throw new IllegalStateException("The context does not match the specified properties, class with name: " + clazz.getName() + "missing in context");
+            throw new IllegalStateException(" The context does not match the specified properties, class with name: " + clazz.getName() + "missing in context");
         }
 
         //todo: resolving failed mapping;

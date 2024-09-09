@@ -8,7 +8,9 @@ import com.example.food_basket_optimization.extraction.properties.base.postmulti
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *Class responsible for correctly placing different types of Property in MultiPropertyContainer.
+ **/
 public class PropertyVisitor implements MultiVisitor {
     private final MultiPropertyContainer propertyContainer;
 
@@ -18,14 +20,14 @@ public class PropertyVisitor implements MultiVisitor {
 
     @Override
     public void property(SimpleProperty<?> resolvableProperty) {
-        propertyContainer.addResolvedProperty(List.of(resolvableProperty));
+        propertyContainer.addResolvedParam(List.of(resolvableProperty));
     }
 
 
     @Override
     public void multi(MultiplyingProperty<?> resolvableProperty) {
         List<? extends SimpleProperty<?>> resolvedProperties = resolvableProperty.multiply();
-        propertyContainer.addResolvedProperty(new ArrayList<>(resolvedProperties));
+        propertyContainer.addResolvedParam(new ArrayList<>(resolvedProperties));
     }
 
     @Override
@@ -36,7 +38,7 @@ public class PropertyVisitor implements MultiVisitor {
 
     @Override
     public void post(PostMultiplyingProperty<?> resolvableProperty) {
-        propertyContainer.addPostProperties(resolvableProperty);
+        propertyContainer.addPostParam(resolvableProperty);
     }
 
 
