@@ -26,6 +26,7 @@ public class DefaultRequestHandler implements RequestHandler {
     public DefaultRequestHandler(DefaultRequestExecutor executor) {
         this.executor = executor;
         client = HttpClients.custom()
+                .disableCookieManagement()
                 .build();
     }
 
