@@ -1,43 +1,41 @@
 package com.example.food_basket_optimization.extractpojo.extractedentity.lenta;
 
-import com.example.food_basket_optimization.entity.City;
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.ExtractedEntityMappedObject;
+import com.example.food_basket_optimization.extraction.ReferencedExtractedEntity;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.annotation.JsonCollection;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
+import java.util.List;
+
+@JsonRootName("result")
 @JsonCollection
-@NoArgsConstructor
-@JsonIgnoreProperties(value = {""})
-public class LentaCityExt implements ExtractedEntity {
-    public String id;
-    public String name;
-    public double lat;
-    @JsonProperty("long")
-    public double mylong;
-    public boolean mediumStoreConcentration;
-    public boolean highStoreConcentration;
-    public String deliveryOptionPopupDefaultValue;
-
-    public LentaCityExt(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-//    @Override
-//    public City map(Object... args) {
-//        return City.builder()
-//                .nameOfCity(name)
-//                .latitude(lat)
-//                .longitude(mylong)
-//                .build();
-//    }
-
-
+public class LentaCityExt implements ExtractedEntity, ReferencedExtractedEntity {
+    public int id;
+    public String alias;
+    public String title;
+    public String marketType;
+    public String localTimeZone;
+    public String localTimeZoneOffset;
+    public String storeOpen;
+    public String storeClose;
+    public String pickupWindowOpen;
+    public String pickupWindowClose;
+    public int regionId;
+    public String addressShort;
+    public String addressFull;
+    public double longitude;
+    public double latitude;
+    public boolean pickupEnable;
+    public int enable;
+    public int offlineEnable;
+    public boolean is24h;
     @Override
     public String toString() {
-        return name;
+        return addressShort;
+    }
+
+    @Override
+    public boolean referencesIsEqual(List<ExtractedEntity> references) {
+        return Boolean.TRUE;
     }
 }

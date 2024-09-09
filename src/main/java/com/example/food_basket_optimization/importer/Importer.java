@@ -11,10 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.stream.Stream;
-
 
 /**
  * Service responsible for parsing a resource and adding data from this resource to the database

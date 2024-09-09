@@ -1,16 +1,13 @@
 package com.example.food_basket_optimization.configuration;
 
 import com.example.food_basket_optimization.extraction.ExtractedEntity;
-import com.example.food_basket_optimization.extraction.filtering.FilterRule;
 import com.example.food_basket_optimization.extraction.filtering.FilterType;
-import com.example.food_basket_optimization.extraction.properties.Property;
-import com.example.food_basket_optimization.extraction.properties.base.multi.properties.IterableStringProperty;
+import com.example.food_basket_optimization.extraction.properties.base.postmulti.PostContextualStringProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.JsonProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.KeyValueSimpleProperty;
 import com.example.food_basket_optimization.extraction.properties.base.multi.properties.ContextualStringProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.ListedKeyValueProperty;
 import com.example.food_basket_optimization.extraction.properties.base.simple.StringProperty;
-import com.example.food_basket_optimization.extraction.properties.base.simple.PathProperty;
 import com.example.food_basket_optimization.extraction.properties.mapping.jsonmap.JsonMapper;
 import com.example.food_basket_optimization.extraction.properties.propertyconstructor.constructableobject.ConstructableNodeImpl;
 import com.example.food_basket_optimization.extraction.properties.propertyconstructor.constructableobject.ConstructableRootObjectImpl;
@@ -22,84 +19,42 @@ import com.example.food_basket_optimization.extraction.properties.base.simple.Ht
 import com.example.food_basket_optimization.extraction.properties.source.sourcehttp.url.UrlBasicProperty;
 import com.example.food_basket_optimization.extraction.properties.sourceresolver.SourceHttpResolver;
 import com.example.food_basket_optimization.extraction.properties.util.RefValue;
-import com.example.food_basket_optimization.extraction.service.request.HttpProxyClient;
-import com.example.food_basket_optimization.extraction.service.request.HttpProxyClientProvider;
-import com.example.food_basket_optimization.extraction.service.request.executor.DefaultRequestExecutor;
-import com.example.food_basket_optimization.extraction.service.request.processing.ProcessingProxyCookie;
-import com.example.food_basket_optimization.extraction.service.request.processing.ProcessingRequest;
-import com.example.food_basket_optimization.extraction.service.request.requesthandler.DefaultRequestHandler;
-import com.example.food_basket_optimization.extraction.service.request.requesthandler.ProxyRequestHandler;
-import com.example.food_basket_optimization.extraction.service.request.requesthandler.RequestHandler;
-import com.example.food_basket_optimization.extraction.service.request.util.RequestUtil;
 import com.example.food_basket_optimization.extractpojo.extractedentity.lenta.*;
-import com.example.food_basket_optimization.selenium.page.UnknownPage;
-import com.example.food_basket_optimization.selenium.page.YahooCurrentSearchPage;
-import com.example.food_basket_optimization.selenium.util.DriverOptions;
-import com.example.food_basket_optimization.selenium.util.Util;
-import com.google.common.collect.Lists;
-import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.message.BasicHeader;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ConcurrentMap;
-import java.util.stream.Stream;
 
+@Profile(value = {"lenta"})
 @Configuration
 public class LentaConfiguration {
 
-    @Bean
-    public List<LentaNodeCodeExtr> lentaNodeCodes() {
-        String nodeCodes = """
-                          g1baf1ddaa150137098383967c9a8e732
-                          g301007c55a37d7ff8539f1f169a4b8ae
-                          g68552e15008531b8ae99799a1d9391df
-                          g9290c81c23578165223ca2befe178b47
-                          g6f4a2d852409e5804606d640dc97a2b1
-                          gf925791ef5e5040add50a6e391cae599
-                          ga4638d8e16b266a51b9906c290531afb
-                          gd4625b4c495bddf681f01669988626db
-                          gad95d0db03fef392c89dff187253909a
-                          g1d79df330af0458391dd6307863d333e
-                          g81ed6bb4ec3cd75cbf9117a7e9722a1d
-                          g7886175ed64de08827c4fb2a9ad914f3
-                          g4258530b46e66c5ac62f88a56ee8bce1
-                          gd152557d86db1829c25705de4db3cf66
-                          g4477ab807af5fd53f280b1aac7816659
-                          gb90175be6caae9b1599e7d11326b22c3
-                          gce3c6ce98ad51e02445da35b93d2c7b7
-                          ge638b7ffc736e21c16b21710b4086220
-                          gb57865aeafbfc5aa8e086b86d3000a27
-                          g648e6f3e83892dabd3f63281dab529fd
-                          gaaa3a99413aa9e3963f7f07ed7a75ec0
-                          geee7643ec01603a5db2cf4819de1a033
-                          g6b6be260dbddd6da54dcc3ca020bf380
-                          g604e486481b04594c32002c67a2b459a
-                          g36505197bc9614e24d1020b3cfb38ee5
-                          g7cc5c7251a3e5503dc4122139d606465
-                          g523853c00788bbb520b022c130d1ae92  
-                          """;
-        String[] nodeCodesArr = nodeCodes.split("\n");
-        return Stream.of(nodeCodesArr).map(LentaNodeCodeExtr::new).toList();
-    }
+    private final KeyValueSimpleProperty USER_AGENT = new KeyValueSimpleProperty("User-Agent", " Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Safari/605.1.15");
+    private final KeyValueSimpleProperty HOST = new KeyValueSimpleProperty("Host", " lenta.com");
+    private final KeyValueSimpleProperty DEVICE_ID = new KeyValueSimpleProperty("Deviceid", "d26c60c1-2ddf-1535-8892-fe3fcb88466a");
+    private final KeyValueSimpleProperty TOKEN = new KeyValueSimpleProperty("SessionToken", " D08A54393E0AC4A10ED9560A21000592");
+    private final KeyValueSimpleProperty RETAIL_BRAND = new KeyValueSimpleProperty("X-Retail-Brand", "lo");
+    private final KeyValueSimpleProperty PLATFORM = new KeyValueSimpleProperty("X-Platform", "omniweb");
+    private final KeyValueSimpleProperty OFFSET = new KeyValueSimpleProperty("offset", "0");
+    private final KeyValueSimpleProperty SORT = new KeyValueSimpleProperty("sort", "{\"type\":\"popular\",\"order\":\"desc\"}");
+    private final KeyValueSimpleProperty FILTERS = new KeyValueSimpleProperty("filters", "{\"range\":[],\"checkbox\":[],\"multicheckbox\":[]}");
+
 
     @Bean
-    public HttpJsonProperties lentaCityProperties(JsonMapper jsonMapper,
-                                                  SourceHttpResolver sourceHttpResolver) {
-        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api/v1/cities");
-        HttpMethod method = HttpMethod.GET;
-        StringProperty body = new StringProperty("");
+    public HttpJsonProperties lentaNewShopProperties(JsonMapper jsonMapper,
+                                                     SourceHttpResolver sourceHttpResolver) {
+
+        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/jrpc/pickupStoreSearch");
+        HttpMethod method = HttpMethod.POST;
+        StringProperty body = new StringProperty("{\"method\":\"pickupStoreSearch\",\"params\":{},\"jsonrpc\":\"2.0\",\"id\":\"pickupStoreSearch_75ba419e24b63\"}");
         ListedKeyValueProperty params = new ListedKeyValueProperty(new ArrayList<>());
-        ListedKeyValueProperty headers = new ListedKeyValueProperty(new ArrayList<>());
+        ListedKeyValueProperty headers = new ListedKeyValueProperty(List.of(USER_AGENT, TOKEN, HOST, DEVICE_ID));
 
         ConstructableRootObjectImpl<SourceHttpProperty> constructableObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(url, method, body, params, headers));
+
         ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(constructableObject);
 
         return new HttpJsonProperties(resolvableSource,
@@ -108,141 +63,112 @@ public class LentaConfiguration {
                 sourceHttpResolver);
     }
 
-    //
+
     @Bean
-    public HttpJsonProperties lentaShopProperties(JsonMapper mapper,
-                                                  SourceHttpResolver resolver,
-                                                  ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
-        ListedConstructableNode<PathProperty> pathConstructable = new ListedConstructableNode<>(PathProperty.getConstructor(), List.of(
-                new StringProperty("api"),
-                new StringProperty("v2"),
-                new StringProperty("cities"),
-                new ContextualStringProperty("", extractContext, new RefValue(LentaCityExt.class, "id")),
-                new StringProperty("stores")));
+    public HttpJsonProperties lentaCategoriesProperties(JsonMapper jsonMapper,
+                                                        SourceHttpResolver sourceHttpResolver) {
 
-        ConstructableNodeImpl<? extends Property> urlConstructable = new ConstructableNodeImpl<>(UrlBasicProperty.getConstructor(), List.of(new StringProperty("https"), new StringProperty("lenta.com"), pathConstructable));
+        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api-gateway/v1/catalog/categories");
 
-        ListedKeyValueProperty emptyProperties = new ListedKeyValueProperty(new ArrayList<>());
+        HttpMethod method = HttpMethod.GET;
+        StringProperty body = new StringProperty("");
 
-        ConstructableRootObjectImpl<SourceHttpProperty> rootConstrObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(urlConstructable, HttpMethod.GET, new StringProperty(""), emptyProperties, emptyProperties));
+        ListedKeyValueProperty params = new ListedKeyValueProperty(new ArrayList<>());
+        ListedKeyValueProperty headers = new ListedKeyValueProperty(List.of(RETAIL_BRAND,
+                PLATFORM,
+                TOKEN,
+                DEVICE_ID,
+                USER_AGENT,
+                HOST));
 
-        ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(rootConstrObject);
+        ConstructableRootObjectImpl<SourceHttpProperty> constructableObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(url, method, body, params, headers));
 
-        HttpJsonProperties httpJsonProperties = new HttpJsonProperties(resolvableSource,
-                LentaStoreExt.class,
-                mapper,
-                resolver);
-        httpJsonProperties.addFilterRule("cityKey", FilterType.UNIQUE);
-        return httpJsonProperties;
+        ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(constructableObject);
+
+
+        HttpJsonProperties properties = new HttpJsonProperties(resolvableSource, LentaCategoryExt.class, jsonMapper, sourceHttpResolver);
+        properties.addFilterRule("parentName", FilterType.EQUAL, "");
+        return properties;
+    }
+
+
+    @Bean
+    public HttpJsonProperties lentaCatalogSizeProperties(JsonMapper jsonMapper,
+                                                         SourceHttpResolver sourceHttpResolver,
+                                                         ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
+        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api-gateway/v1/catalog/items");
+        HttpMethod method = HttpMethod.POST;
+
+        ContextualStringProperty category = new ContextualStringProperty("", extractContext, new RefValue(LentaCategoryExt.class, "id"));
+
+        KeyValueSimpleProperty limit = new KeyValueSimpleProperty("limit", "1");
+
+
+        ConstructableNodeImpl<KeyValueSimpleProperty> categoryId = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("categoryId"), category));
+        ListedConstructableNode<JsonProperty> body = new ListedConstructableNode<>(JsonProperty.getConstructor(), List.of(
+                categoryId,
+                limit,
+                OFFSET,
+                SORT,
+                FILTERS
+        ));
+
+        ListedKeyValueProperty params = new ListedKeyValueProperty(new ArrayList<>());
+        ListedKeyValueProperty headers = new ListedKeyValueProperty(List.of(RETAIL_BRAND,
+                PLATFORM,
+                TOKEN,
+                DEVICE_ID,
+                USER_AGENT,
+                HOST));
+
+        ConstructableRootObjectImpl<SourceHttpProperty> constructableObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(url, method, body, params, headers));
+
+        ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(constructableObject);
+
+
+        return new HttpJsonProperties(resolvableSource,
+                LentaCategorySize.class,
+                jsonMapper,
+                sourceHttpResolver);
     }
 
     @Bean
-    public HttpJsonProperties lentaProductProperties(JsonMapper mapper,
-                                                     SourceHttpResolver resolver,
-                                                     ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext,
-                                                     DefaultRequestHandler requestHandler) {
+    public HttpJsonProperties lentaProductProperties(JsonMapper jsonMapper,
+                                                     SourceHttpResolver sourceHttpResolver,
+                                                     ConcurrentMap<Class<? extends ExtractedEntity>, List<? extends ExtractedEntity>> extractContext) {
 
-
-        resolver.setRequestHandler(requestHandler);
-        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api/v1/skus/list");
+        UrlBasicProperty url = new UrlBasicProperty("https", "lenta.com", "/api-gateway/v1/catalog/items");
         HttpMethod method = HttpMethod.POST;
+        ContextualStringProperty category = new ContextualStringProperty("", extractContext, new RefValue(LentaCategoryExt.class, "id"));
 
-        ConstructableNodeImpl<KeyValueSimpleProperty> nodeCode = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("nodeCode"),
-                new ContextualStringProperty("", extractContext, new RefValue(LentaNodeCodeExtr.class, "nodeCode"))));
-        KeyValueSimpleProperty filters = new KeyValueSimpleProperty("filters", "[]");
-        KeyValueSimpleProperty tag = new KeyValueSimpleProperty("tag", "");
-        KeyValueSimpleProperty pricesRange = new KeyValueSimpleProperty("pricesRange", "null");
-        KeyValueSimpleProperty typeSearch = new KeyValueSimpleProperty("typeSearch", "1");
-        KeyValueSimpleProperty limit = new KeyValueSimpleProperty("limit", "24");
-        ConstructableNodeImpl<KeyValueSimpleProperty> offset = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("offset"), new IterableStringProperty("", 24, 300, (n) -> n + 24)));
-//        KeyValueSimpleProperty offset = new KeyValueSimpleProperty("offset", "24");
-        KeyValueSimpleProperty updateFilters = new KeyValueSimpleProperty("updateFilters", "true");
-        KeyValueSimpleProperty sortingType = new KeyValueSimpleProperty("sortingType", "ByPopularity");
+        ConstructableNodeImpl<KeyValueSimpleProperty> limit = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("limit"),
+                new PostContextualStringProperty(extractContext, new RefValue(LentaCategorySize.class, "size"))));
 
-        ListedConstructableNode<JsonProperty> body = new ListedConstructableNode<>(JsonProperty.getConstructor(), List.of(nodeCode, filters, tag, pricesRange, typeSearch, limit, offset, updateFilters, sortingType));
+        ConstructableNodeImpl<KeyValueSimpleProperty> categoryId = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("categoryId"), category));
 
-
-        KeyValueSimpleProperty userAgent = new KeyValueSimpleProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15");
-        KeyValueSimpleProperty contentType = new KeyValueSimpleProperty("Content-Type", "application/json");
-        KeyValueSimpleProperty cookie = new KeyValueSimpleProperty("Cookie", "Store= 0155");
-
-//        ConstructableNodeImpl<KeyValueSimpleProperty> cookie = new ConstructableNodeImpl<>(KeyValueSimpleProperty.getConstructor(), List.of(new StringProperty("Cookie"), new ContextualStringProperty("Store=", extractContext, new RefValue(LentaStoreExt.class, "id"))));
-//        KeyValueUrlContextual cookie = new KeyValueUrlContextual("Cookie", "Store=", extractContext, new RefValue(LentaStoreExt.class, "id"));
+        ListedConstructableNode<JsonProperty> body = new ListedConstructableNode<>(JsonProperty.getConstructor(), List.of(
+                categoryId,
+                limit,
+                OFFSET,
+                SORT,
+                FILTERS
+        ));
 
 
-        ListedConstructableNode<ListedKeyValueProperty> headers = new ListedConstructableNode<>(ListedKeyValueProperty.getConstructor(), List.of(userAgent, contentType, cookie));
+        ListedKeyValueProperty params = new ListedKeyValueProperty(new ArrayList<>());
+        ListedKeyValueProperty headers = new ListedKeyValueProperty(List.of(RETAIL_BRAND,
+                PLATFORM,
+                TOKEN,
+                DEVICE_ID,
+                USER_AGENT,
+                HOST));
 
-        ListedKeyValueProperty params = new ListedKeyValueProperty(List.of());
-
-        ConstructableRootObjectImpl<SourceHttpProperty> rootObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(url, method, body, params, headers));
-
-        ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(rootObject);
+        ConstructableRootObjectImpl<SourceHttpProperty> constructableObject = new ConstructableRootObjectImpl<>(SourceHttpProperty.getConstructor(), List.of(url, method, body, params, headers));
+        ResolvableSourceHttpProperties resolvableSource = new ResolvableSourceHttpProperties(constructableObject);
 
         return new HttpJsonProperties(resolvableSource,
                 LentaProductExt.class,
-                mapper,
-                resolver);
+                jsonMapper,
+                sourceHttpResolver);
     }
-
-//    @Bean
-//    public HttpProxyClientProvider lentaProxyClientProvider(List<HttpProxyClient> proxyClients) {
-//        ProcessingProxyCookie processing = (addr, port, login, pass) -> {
-//            String qratorName = "qrator_jsid";
-//            String aspNetName = "ASP.NET_SessionId";
-//            String customerIdName = "CustomerId";
-//            String validationTokenName = "ValidationToken";
-//            File chromeProxyExtension = Util.getProxyExtensions(addr, port.toString(), login, pass);
-//            ChromeOptions options = DriverOptions.defaultParseChromeDriverOptions();
-//
-//            options.addExtensions(chromeProxyExtension);
-//
-//            ChromeDriver browser = new ChromeDriver(options);
-//
-//            YahooCurrentSearchPage yahooCurrentSearchPage = new YahooCurrentSearchPage(browser, "lenta.com");
-//            UnknownPage unknownPage = yahooCurrentSearchPage.clickFirstLink();
-//
-//            Cookie qratorCookie = unknownPage.getCookie(qratorName);
-//            Cookie aspNetCookie = unknownPage.getCookie(aspNetName);
-//            Cookie customerIdCookie = unknownPage.getCookie(customerIdName);
-//            Cookie validationTokenCookie = unknownPage.getCookie(validationTokenName);
-//            BasicHeader cookie = new BasicHeader("Cookie", aspNetCookie.getName() + "=" + aspNetCookie.getValue());
-//            BasicHeader cookie1 = new BasicHeader("Cookie", qratorCookie.getName() + "=" + qratorCookie.getValue());
-//            BasicHeader cookie2 = new BasicHeader("Cookie", validationTokenCookie.getName() + "=" + validationTokenCookie.getValue());
-//            BasicHeader cookie3 = new BasicHeader("Cookie", customerIdCookie.getName() + "=" + customerIdCookie.getValue());
-//
-//            browser.quit();
-//            return List.of(cookie3, cookie2, cookie1, cookie);
-//        };
-//        return new HttpProxyClientProvider(proxyClients, List.of(processing));
-//    }
-
-//    @Bean
-//    public ProcessingRequest lentaProductProcessingRequest() {
-//        return (client, request) -> {
-//            StringBuilder sb = new StringBuilder();
-//            List<Header> cookieHeaders = Lists.reverse(RequestUtil.getHeaders("Cookie", request));
-//            request.removeHeaders("Cookie");
-//            cookieHeaders.forEach(cookieHeader -> sb.append(cookieHeader.getValue()).append(";"));
-//            BasicHeader cookie = new BasicHeader("Cookie", sb.toString());
-//            request.addHeader(cookie);
-//
-//            try {
-//                Thread.sleep(new Random().nextInt(1500, 2100));
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        };
-//    }
-
-//    @Bean
-//    public ProxyRequestHandler lentaProductRequestHandler(DefaultRequestExecutor executor,
-//                                                          HttpProxyClientProvider lentaProxyClientProvider,
-//                                                          ProcessingRequest lentaProductProcessingRequest) {
-//        ProxyRequestHandler requestHandler = new ProxyRequestHandler(executor, lentaProxyClientProvider);
-//        requestHandler.addProcessingRequest(lentaProductProcessingRequest);
-//        return requestHandler;
-//    }
-
-
-
 }
